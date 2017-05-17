@@ -1,7 +1,5 @@
 package com.llamaniac.not4.avoid4;
 
-import java.lang.reflect.Array;
-
 /**
  * Created by Wilbur on 17/05/2017.
  */
