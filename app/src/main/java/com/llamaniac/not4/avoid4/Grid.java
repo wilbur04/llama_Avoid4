@@ -9,7 +9,7 @@ public class Grid {
     private int[][] board ;
 
     public Grid() {
-        board = new int[4][4];
+        board = new int[5][5];
         cleanGrid();
     }
 
