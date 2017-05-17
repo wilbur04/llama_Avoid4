@@ -11,7 +11,7 @@ public class Grid {
     private  Array[][] board ;
 
     public Grid() {
-        //todo : initiate
+
     }
 
     public Array[][] getBoard() {
