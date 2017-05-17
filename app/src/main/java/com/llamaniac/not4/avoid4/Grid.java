@@ -8,17 +8,26 @@ import java.lang.reflect.Array;
 
 public class Grid {
     private int activePlayer;
-    private  Array[][] board ;
+    private int[][] board ;
 
     public Grid() {
-
+        board = new int[4][4];
+        cleanGrid();
     }
 
-    public Array[][] getBoard() {
+    private void cleanGrid() {
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board.length; y++) {
+                board[x][y] = 0;
+            }
+        }
+    }
+
+    public int[][] getBoard() {
         return board;
     }
 
-    public void setBoard(Array[][] board) {
+    public void setBoard(int[][] board) {
         this.board = board;
     }
 
