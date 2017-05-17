@@ -16,6 +16,7 @@ public class ExampleUnitTest {
     @Before
     public void executedBeforeEach() {
         testGrid = new Grid();
+        testGrid.setActivePlayer(1);
     }
 
     @Test
@@ -26,5 +27,34 @@ public class ExampleUnitTest {
     @Test
     public void testGridConstructor() throws Exception {
         assertTrue(testGrid.getBoard()[0][0]==0);
+        testGrid.printGrid();
+
     }
+
+    @Test
+    public void testGetNextRow(){
+        assertEquals(testGrid.getNextRow(0),3);
+    }
+
+    @Test
+    public void testAdd(){
+        testGrid.printGrid();
+        testGrid.add(0);
+        testGrid.printGrid();
+        testGrid.add(0);
+        testGrid.printGrid();
+        testGrid.add(0);
+        testGrid.printGrid();
+        testGrid.add(0);
+        testGrid.printGrid();
+        testGrid.add(0);
+        testGrid.printGrid();
+        testGrid.add(3);
+        testGrid.printGrid();
+
+
+    }
+
+
+
 }
