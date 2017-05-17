@@ -33,26 +33,14 @@ public class ExampleUnitTest {
 
     @Test
     public void testGetNextRow(){
-        assertEquals(testGrid.getNextRow(0),3);
+        assertEquals(testGrid.getNextRow(0),4);
     }
 
     @Test
     public void testAdd(){
-        testGrid.printGrid();
         testGrid.add(0);
         testGrid.printGrid();
-        testGrid.add(0);
-        testGrid.printGrid();
-        testGrid.add(0);
-        testGrid.printGrid();
-        testGrid.add(0);
-        testGrid.printGrid();
-        testGrid.add(0);
-        testGrid.printGrid();
-        testGrid.add(3);
-        testGrid.printGrid();
-
-
+        assertEquals(testGrid.getNextRow(0),3);
     }
 
 

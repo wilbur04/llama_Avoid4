@@ -11,6 +11,7 @@ public class Grid {
     public Grid() {
         board = new int[5][5];
         cleanGrid();
+        activePlayer =1;
     }
 
     private void cleanGrid() {
@@ -106,7 +107,6 @@ public class Grid {
         }
         return true;
     }
-
 
 }
 
