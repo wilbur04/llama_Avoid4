@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         game = new Grid();
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
         player_turn_string.setTextColor(color_player1);
-        player_turn_string.setText(currentplayersName()+ "'s Turn");
+        player_turn_string.setText(currentPlayersName()+ "'s Turn");
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
         c3a = (Button) findViewById(R.id.c3a);
@@ -266,7 +266,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updatePlayer() {
         currentPlayer = game.getActivePlayer();
-        player_turn_string.setText(currentplayersName()+ "'s Turn");
+        player_turn_string.setText(currentPlayersName()+ "'s Turn");
         if (currentPlayer==1) {
             player_turn_string.setTextColor(color_player1);
         } else {
@@ -331,7 +331,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         updateGrid();
     }
 
-    private String currentplayersName(){
+    private String currentPlayersName(){
         switch (currentPlayer) {
             case 1:
                 return NameStore.INSTANCE.getPlayer1Name();
