@@ -20,10 +20,10 @@ public class Grid {
         cleanGrid();
     }
 
-    private boolean getPlayer1lost() {
+    public boolean getPlayer1lost() {
         return player1lost;
     }
-    private boolean getPlayer2lost() {
+    public boolean getPlayer2lost() {
         return player2lost;
     }
 
