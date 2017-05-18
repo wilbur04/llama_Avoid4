@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.security.AccessController.getContext;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
@@ -20,6 +23,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
+    private ImageView p1_image, p2_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -31,9 +35,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         color_player2 = getResources().getColor(R.color.player_2);
 
         game = new Grid();
+
+        p1_image = (ImageView) findViewById(R.id.p1imageView);
+        //p2_image = (ImageView) findViewById(R.id.p2imageView);
+        p1_image.setColorFilter(color_player1);
+
+
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
         player_turn_string.setTextColor(color_player1);
         player_turn_string.setText(currentplayersName()+ "'s Turn");
+
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
         c3a = (Button) findViewById(R.id.c3a);
@@ -265,12 +276,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updatePlayer() {
-        currentPlayer = game.getActivePlayer();
-        player_turn_string.setText(currentplayersName()+ "'s Turn");
-        if (currentPlayer==1) {
-            player_turn_string.setTextColor(color_player1);
-        } else {
-            player_turn_string.setTextColor(color_player2);
+        if(!game.boardIsFull()) {
+            currentPlayer = game.getActivePlayer();
+            player_turn_string.setText(currentplayersName() + "'s Turn");
+            if (currentPlayer == 1) {
+                player_turn_string.setTextColor(color_player1);
+                p1_image.setColorFilter(color_player1);
+
+            } else {
+                player_turn_string.setTextColor(color_player2);
+                p1_image.setColorFilter(color_player2);
+
+            }
+        }else{
+            player_turn_string.setText("Game Over");
+            p1_image.setColorFilter(getResources().getColor(R.color.disable));
+            endGame();
         }
     }
 
@@ -315,11 +336,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player2);
+            p1_image.setColorFilter(color_player2);
             endGame();
         } else if (game.getPlayer2lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player1);
+            p1_image.setColorFilter(color_player1);
             endGame();
         }
     }
