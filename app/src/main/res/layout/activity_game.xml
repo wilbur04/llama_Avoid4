@@ -14,211 +14,217 @@
         android:text="Player 1's turn"
         android:textSize="24sp" />
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dip"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <TableRow
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <Button
                 android:id="@+id/c1a"
                 android:layout_height="62dip"
                 android:layout_margin="2dp"
-                android:layout_weight="1"
+                android:layout_width="62dip"
                 android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c2a"
                 android:layout_height="62dip"
                 android:layout_margin="2dp"
-                android:layout_weight="1"
+                android:layout_width="62dip"
                 android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c3a"
-                android:layout_weight="1"
                 android:layout_height="62dip"
                 android:layout_margin="2dp"
+                android:layout_width="62dip"
                 android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c4a"
-                android:layout_weight="1"
                 android:layout_height="62dip"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape3"/>
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c5a"
-                android:layout_weight="1"
                 android:layout_height="62dip"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape3"/>
-        </TableRow>
-        <TableRow
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/c1b"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c2b"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c3b"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c4b"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c5b"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
-        </TableRow>
-        <TableRow
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/c1c"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c2c"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c3c"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c4c"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c5c"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
-        </TableRow>
-        <TableRow
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/c1d"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c2d"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c3d"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c4d"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c5d"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
-        </TableRow>
-        <TableRow
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/c1e"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c2e"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c3e"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c4e"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
             <Button
                 android:id="@+id/c5e"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
                 android:layout_height="62dip"
-                android:background="@drawable/shape3"/>
-        </TableRow>
+                android:layout_margin="2dp"
+                android:layout_width="62dip"
+                android:background="@drawable/shape3" />
 
+        </LinearLayout>
 
-    </TableLayout>
-
+    </LinearLayout>
 
 </RelativeLayout>

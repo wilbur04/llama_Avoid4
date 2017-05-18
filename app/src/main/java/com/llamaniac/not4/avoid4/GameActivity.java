@@ -2,6 +2,7 @@ package com.llamaniac.not4.avoid4;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
 
         color_green = getResources().getColor(R.color.player_1);
         color_blue = getResources().getColor(R.color.player_2);
