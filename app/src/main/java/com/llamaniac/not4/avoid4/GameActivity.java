@@ -318,10 +318,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (game.getPlayer1lost()) {
             popUpMsg = "Player 2 Won";
             player_turn_string.setText(popUpMsg);
+            player_turn_string.setTextColor(color_player2);
             endGame();
         } else if (game.getPlayer2lost()) {
             popUpMsg = "Player 1 Won";
             player_turn_string.setText(popUpMsg);
+            player_turn_string.setTextColor(color_player1);
             endGame();
         }
     }
