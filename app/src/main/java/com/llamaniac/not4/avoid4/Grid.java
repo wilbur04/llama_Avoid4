@@ -133,6 +133,11 @@ public class Grid {
             return true;
         }
 
+        if (checkTLBR()==1) {
+            System.out.println("1 has lost");
+            return true;
+        }
+
         return false;
     }
 
@@ -218,12 +223,169 @@ public class Grid {
         return 0;
     }
 
-    public int searchDiagonalLost1(){
+    public int checkTLBR() {
+        if (board[1][0] == 1) {
+            if (board[2][1] == 1) {
+                if (board[3][2] == 1) {
+                    if (board[4][3] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[1][0] == 2) {
+            if (board[2][1] == 2) {
+                if (board[3][2] == 2) {
+                    if (board[4][3] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        if (board[0][1] == 1) {
+            if (board[1][2] == 1) {
+                if (board[2][3] == 1) {
+                    if (board[3][4] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[0][1] == 2) {
+            if (board[1][2] == 2) {
+                if (board[2][3] == 2) {
+                    if (board[3][4] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        if (board[0][0] == 1) {
+            if (board[1][1] == 1) {
+                if (board[2][2] == 1) {
+                    if (board[3][3] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[1][1] == 1) {
+            if (board[2][2] == 1) {
+                if (board[3][3] == 1) {
+                    if (board[4][4] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[0][0] == 2) {
+            if (board[1][1] == 2) {
+                if (board[2][2] == 2) {
+                    if (board[3][3] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        if (board[1][1] == 2) {
+            if (board[2][2] == 2) {
+                if (board[3][3] == 2) {
+                    if (board[4][4] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
 
-        for (int y = 0; y <= board.length; y++) {
-        int tempy = y;
-            for (int x = 0; x <= board.length; x++) {
-
+    public int checkBLTR() {
+        if (board[3][0] == 1) {
+            if (board[2][1] == 1) {
+                if (board[1][2] == 1) {
+                    if (board[0][1] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[3][0] == 2) {
+            if (board[2][1] == 2) {
+                if (board[1][2] == 2) {
+                    if (board[0][1] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        if (board[4][1] == 1) {
+            if (board[3][2] == 1) {
+                if (board[2][3] == 1) {
+                    if (board[1][4] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[4][1] == 2) {
+            if (board[3][2] == 2) {
+                if (board[2][3] == 2) {
+                    if (board[1][4] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        if (board[4][0] == 1) {
+            if (board[3][1] == 1) {
+                if (board[2][2] == 1) {
+                    if (board[1][3] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[4][0] == 2) {
+            if (board[3][1] == 2) {
+                if (board[2][2] == 2) {
+                    if (board[1][3] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
+            }
+        }
+        if (board[3][1] == 1) {
+            if (board[2][2] == 1) {
+                if (board[1][3] == 1) {
+                    if (board[0][4] == 1) {
+                        //1 has lost
+                        return 1;
+                    }
+                }
+            }
+        }
+        if (board[3][1] == 2) {
+            if (board[2][2] == 2) {
+                if (board[1][3] == 2) {
+                    if (board[0][4] == 2) {
+                        //2 has lost
+                        return 2;
+                    }
+                }
             }
         }
         return 0;
