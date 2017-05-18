@@ -339,7 +339,7 @@ public class Grid {
         if (board[3][0] == 1) {
             if (board[2][1] == 1) {
                 if (board[1][2] == 1) {
-                    if (board[0][1] == 1) {
+                    if (board[0][3] == 1) {
                         //1 has lost
                         return 1;
                     }
@@ -349,7 +349,7 @@ public class Grid {
         if (board[3][0] == 2) {
             if (board[2][1] == 2) {
                 if (board[1][2] == 2) {
-                    if (board[0][1] == 2) {
+                    if (board[0][3] == 2) {
                         //2 has lost
                         return 2;
                     }
