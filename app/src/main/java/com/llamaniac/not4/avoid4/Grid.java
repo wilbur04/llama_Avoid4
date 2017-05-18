@@ -7,14 +7,26 @@ package com.llamaniac.not4.avoid4;
 public class Grid {
     private int activePlayer;
     private int[][] board ;
+    private boolean player1lost = false;
+    private boolean player2lost = false;
 
     public Grid() {
         board = new int[5][5];
         cleanGrid();
         activePlayer = 1;
+
+    }
+
+    public boolean getPlayer1lost() {
+        return player1lost;
+    }
+    public boolean getPlayer2lost() {
+        return player2lost;
     }
 
     private void cleanGrid() {
+        player1lost = false;
+        player2lost = false;
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board.length; y++) {
                 board[y][x] = 0;
@@ -125,21 +137,24 @@ public class Grid {
         searchHorizontalLost();
         if (searchHorizontalLost()==1){
             System.out.println("sussecc");
+            player1lost = true;
             return true;
         }
 
         if (searchVerticalLost()==1){
             System.out.println("sussecc");
+            player1lost = true;
             return true;
         }
 
         if (checkTLBR()==1) {
             System.out.println("1 has lost tlbr");
+            player1lost = true;
             return true;
         }
         if (checkBLTR() ==1){
             System.out.println("1 has lost bltr");
-
+            player1lost = true;
             return true;
         }
 
@@ -149,16 +164,20 @@ public class Grid {
     public boolean p2HasLost(){
         if (searchHorizontalLost()==2){
             System.out.println("sussecc2");
+            player2lost = true;
             return true;
         }
         else if (searchVerticalLost()==2){
             System.out.println("sussecc2");
+            player2lost = true;
             return true;
         }else  if (checkBLTR()==2){
             System.out.println("sussecc2 bltr");
+            player2lost = true;
             return  true;
         }else if (checkTLBR() ==2){
             System.out.println("sussecc2");
+            player2lost = true;
             return true;
         }
         return false;

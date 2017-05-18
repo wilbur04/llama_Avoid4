@@ -12,13 +12,14 @@ import java.util.Map;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
-            , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e;
+            , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e, restart_button;
     private TextView player_turn_string;
     private int currentPlayer;
     private int[][] currentBoard;
     private Grid game;
     private int color_green, color_blue;
     private HashMap<String, Button> buttons;
+    private String popUpMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,6 +63,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         c4e = (Button) findViewById(R.id.c4e);
         c5e = (Button) findViewById(R.id.c5e);
 
+        restart_button = (Button) findViewById(R.id.restart_button);
+
         c1a.setOnClickListener(this);
         c2a.setOnClickListener(this);
         c3a.setOnClickListener(this);
@@ -91,6 +94,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         c3e.setOnClickListener(this);
         c4e.setOnClickListener(this);
         c5e.setOnClickListener(this);
+
+        restart_button.setOnClickListener(this);
 
         buttons = new HashMap<>();
 
@@ -131,7 +136,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int[][] currentBoard = game.getBoard();
         int currentPlayer = game.getActivePlayer();
         player_turn_string.setText("Player " + currentPlayer + "'s Turn");
+
     }
+
+    private void endGame() {
+        for(Map.Entry<String, Button> entry : buttons.entrySet()) {
+            String key = entry.getKey();
+            Button value = entry.getValue();
+            value.setClickable(false);
+        }
+        findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
+    }
+
+
 
     @Override
     public void onClick(View v) {
@@ -237,6 +254,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 column5Btn();
                 break;
 
+            case R.id.restart_button:
+                findViewById(R.id.restart_button).setVisibility(View.INVISIBLE);
+                finish();
+                startActivity(getIntent());
+                break;
+
             default:
                 break;
         }
@@ -286,6 +309,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void updateGrid() {
         currentBoard = game.getBoard();
         concatNameAndSet();
+        if (game.getPlayer1lost()) {
+            popUpMsg = "Player 2 Won";
+            player_turn_string.setText(popUpMsg);
+            endGame();
+        } else if (game.getPlayer2lost()) {
+            popUpMsg = "Player 1 Won";
+            player_turn_string.setText(popUpMsg);
+            endGame();
+        }
     }
 
     private void column1Btn() {
