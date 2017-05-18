@@ -278,13 +278,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void concatNameAndSet() {
-        String temp = "";
         for (int x=0; x<currentBoard.length; x++) {
             for (int y=0; y<currentBoard.length; y++) {
                 if (currentBoard[y][x] != 0) {
 
-                    temp = "c";
-
+                    String temp = "c";
                     temp += String.valueOf(x+1);
                     temp += numToString(y);
 

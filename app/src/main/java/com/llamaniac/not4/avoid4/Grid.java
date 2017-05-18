@@ -7,11 +7,15 @@ package com.llamaniac.not4.avoid4;
 public class Grid {
     private int activePlayer;
     private int[][] board ;
-    private boolean player1lost = false;
-    private boolean player2lost = false;
+    private boolean player1lost;
+    private boolean player2lost;
+    private int length;
 
     public Grid() {
-        board = new int[5][5];
+        length = 5;
+        board = new int[length][length];
+        player1lost = false;
+        player2lost = false;
         activePlayer = 1;
         cleanGrid();
     }
@@ -24,10 +28,8 @@ public class Grid {
     }
 
     private void cleanGrid() {
-        player1lost = false;
-        player2lost = false;
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board.length; y++) {
+        for (int x = 0; x < length; x++) {
+            for (int y = 0; y < length; y++) {
                 board[y][x] = 0;
             }
         }
@@ -49,8 +51,8 @@ public class Grid {
      * for testing only
      */
     public void printGrid(){
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board.length; y++) {
+        for (int x = 0; x < length; x++) {
+            for (int y = 0; y < length; y++) {
                 System.out.print(" ["+board[x][y]+"] ");
             }
             System.out.println("");
@@ -61,7 +63,7 @@ public class Grid {
     /**
      * To swap the players.
      */
-    public void changeActivePlayer() {
+    private void changeActivePlayer() {
         if (this.getActivePlayer() == 1) {
             this.setActivePlayer(2);
         } else {
@@ -74,8 +76,8 @@ public class Grid {
      * @param col
      * @return
      */
-    public int getNextRow(int col) {
-        for (int i = board.length-1; i >= 0; i--){
+    private int getNextRow(int col) {
+        for (int i = length-1; i >= 0; i--){
             if (board[i][col] == 0) {
                 return i;
             }
@@ -83,7 +85,7 @@ public class Grid {
         return -1;
     }
 
-    public boolean columnIsFull(int col) {
+    private boolean columnIsFull(int col) {
         return getNextRow(col) == -1;
     }
 
@@ -94,23 +96,20 @@ public class Grid {
     public void add(int col) {
         if (!columnIsFull(col)) {
             board[getNextRow(col)][col] = this.getActivePlayer();
-            if (p1HasLost()) {
-                System.out.println("Player1 lost");
-            } else if (p2HasLost()) {
-                System.out.println("Player2 lost");
+            if (hasLost(1)) {
+                player1lost = true;
+            } else if (hasLost(2)) {
+                player2lost = true;
             } else {
                 this.changeActivePlayer();
             }
-        } else {
-            //todo:  what happens when it is full?
-            System.out.println("full");
         }
     }
 
     public boolean boardIsFull() {
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board.length; y++) {
-                if (board[y][x]==0){
+        for (int x = 0; x < length; x++) {
+            for (int y = 0; y < length; y++) {
+                if (board[y][x] == 0){
                     return false;
                 }
             }
@@ -118,54 +117,24 @@ public class Grid {
         return true;
     }
 
-    private boolean p1HasLost() {
-        if (searchHorizontalLost() == 1) {
-            player1lost = true;
-            return true;
-        }
 
-        if (searchVerticalLost() == 1) {
-            player1lost = true;
-            return true;
+    private boolean hasLost(int player) {
+        if (checkHorizontalLoss() != player) {
+            if (checkVerticalLoss() != player) {
+                if (checkDiagonalUpwardsLoss() != player) {
+                    if (checkDiagonalDownwardsLoss() != player) {
+                        return false;
+                    }
+                }
+            }
         }
-
-        if (checkTLBR() == 1) {
-            player1lost = true;
-            return true;
-        }
-        if (checkBLTR() == 1) {
-            player1lost = true;
-            return true;
-        }
-        return false;
+        return true;
     }
 
-    private boolean p2HasLost() {
-        if (searchHorizontalLost() == 2) {
-            player2lost = true;
-            return true;
-        }
-
-        if (searchVerticalLost() == 2) {
-            player2lost = true;
-            return true;
-        }
-
-        if (checkTLBR() == 2) {
-            player2lost = true;
-            return true;
-        }
-        if (checkBLTR() ==2 ) {
-            player2lost = true;
-            return true;
-        }
-        return false;
-    }
-
-    private int searchHorizontalLost() {
+    private int checkHorizontalLoss() {
         int count1 = 0, count2 = 0;
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board.length; y++) {
+        for (int x = 0; x < length; x++) {
+            for (int y = 0; y < length; y++) {
                 if (board[x][y] == 1) {
                     count1++;
                     count2 = 0;
@@ -190,10 +159,10 @@ public class Grid {
     }
 
 
-    private int searchVerticalLost() {
+    private int checkVerticalLoss() {
         int count1 = 0, count2 = 0;
-        for (int x = 0; x < board.length; x++) {
-            for (int y=0; y < board.length; y++) {
+        for (int x = 0; x < length; x++) {
+            for (int y=0; y < length; y++) {
                 if (board[y][x] == 1) {
                     count1++;
                     count2 = 0;
@@ -206,8 +175,7 @@ public class Grid {
                 }
                 if (count1 == 4 ){
                     return 1;
-                }
-                else if (count2 == 4){
+                } else if (count2 == 4){
                     return 2;
                 }
             }
@@ -217,7 +185,7 @@ public class Grid {
         return 0;
     }
 
-    public int checkTLBR() {
+    private int checkDiagonalDownwardsLoss() {
         if (board[1][0] == 1) {
             if (board[2][1] == 1) {
                 if (board[3][2] == 1) {
@@ -301,7 +269,7 @@ public class Grid {
         return 0;
     }
 
-    public int checkBLTR() {
+    private int checkDiagonalUpwardsLoss() {
         if (board[3][0] == 1) {
             if (board[2][1] == 1) {
                 if (board[1][2] == 1) {
