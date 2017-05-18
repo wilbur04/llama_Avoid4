@@ -39,8 +39,18 @@ public class ExampleUnitTest {
     @Test
     public void testAdd(){
         testGrid.add(0);
-        testGrid.printGrid();
         assertEquals(testGrid.getNextRow(0),3);
+        testGrid.add(1);
+        testGrid.add(0);
+        testGrid.add(2);
+
+        testGrid.add(0);
+        testGrid.add(2);
+        testGrid.add(0);
+        testGrid.add(2);
+        testGrid.add(0);
+        testGrid.add(4);
+
     }
 
 

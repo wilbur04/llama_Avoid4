@@ -44,7 +44,7 @@ public class Grid {
             }
             System.out.println("");
         }
-        System.out.println("");
+        System.out.println("-------------------");
     }
 
     /**
@@ -55,8 +55,6 @@ public class Grid {
             this.setActivePlayer(2);
         }else if (this.getActivePlayer()==2){
             this.setActivePlayer(1);
-        }else{
-            this.setActivePlayer(0);
         }
     }
 
@@ -68,7 +66,6 @@ public class Grid {
     public int getNextRow(int col){
         for (int i=board.length-1; i>=0; i--){
             if (board[i][col]==0){
-                System.out.println("gNR " + i);
                 return i;
             }
         }
@@ -76,12 +73,11 @@ public class Grid {
     }
 
     public boolean columnIsFull(int col){
-       if (getNextRow(col)==-1){
-           System.out.println(board.length-1);
-           return true;
-       }else{
-           return false;
-       }
+        if (getNextRow(col)==-1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -91,10 +87,26 @@ public class Grid {
     public void add(int col){
         if (!columnIsFull(col)) {
             board[getNextRow(col)][col] = this.getActivePlayer();
-            this.changeActivePlayer();
+            if (p1HasLost(getNextRow(col),col)){
+
+                //// TODO: 18/05/2017 notify that p1 has lost
+                System.out.println("Player1 lost");
+
+            }else if (p1HasLost(getNextRow(col),col)){
+
+                //// TODO: 18/05/2017 notify p2 has lost
+                System.out.println("Player2 lost");
+
+            }
+            else{
+                this.changeActivePlayer();
+            }
         } else {
+            //todo:  what happens when it is full?
             System.out.println("full");
         }
+        printGrid();
+
     }
 
     public boolean boardIsFull(){
@@ -106,6 +118,115 @@ public class Grid {
             }
         }
         return true;
+    }
+
+    public boolean p1HasLost(int row, int col) {
+        int count1, count2 = 0;
+        searchHorizontalLost();
+        if (searchHorizontalLost()==1){
+            System.out.println("sussecc");
+            return true;
+        }
+
+        if (searchVerticalLost()==1){
+            System.out.println("sussecc");
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean p2HasLost(){
+        if (searchHorizontalLost()==2){
+            System.out.println("sussecc2");
+            return true;
+        }
+        else if (searchVerticalLost()==2){
+            System.out.println("sussecc2");
+            return true;
+        }
+        return false;
+    }
+
+    public int searchHorizontalLost(){
+        int count1 = 0, count2 = 0;
+
+        for (int x=0; x<board.length; x++){
+            for (int y=0; y<board.length; y++){
+                if (board[x][y]==1){
+                    count1++;
+                    count2=0;
+                }else if (board[x][y]==2){
+                    count2++;
+                    count1=0;
+                } else {
+                    count1=0;
+                    count2=0;
+                }
+
+                if (count1 == 4 ){
+                    return 1;
+                }
+                else if (count2 == 4){
+                    return 2;
+                }
+
+            }
+
+            count1 = 0;
+            count2 = 0;
+
+        }
+        return 0;
+    }
+
+
+    public int searchVerticalLost(){
+        int count1 = 0, count2 = 0;
+        System.out.println("print countsd"+count1);
+
+        for (int x=0; x<board.length; x++){
+            System.out.println("print count"+count1);
+            for (int y=0; y<board.length; y++){
+                if (board[y][x]==1){
+                    System.out.println("in count1"+count2);
+                    count1++;
+                    count2=0;
+                }else if (board[y][x]==2){
+                    count2++;
+                    count1=0;
+                } else {
+                    count1=0;
+                    count2=0;
+                }
+
+                if (count1 == 4 ){
+                    System.out.println("print count1"+count1);
+                    return 1;
+                }
+                else if (count2 == 4){
+                    System.out.println("print count2"+count2);
+                    return 2;
+                }
+
+            }
+
+            count1 = 0;
+            count2 = 0;
+
+        }
+        return 0;
+    }
+
+    public int searchDiagonalLost1(){
+
+        for (int y = 0; y <= board.length; y++) {
+        int tempy = y;
+            for (int x = 0; x <= board.length; x++) {
+
+            }
+        }
+        return 0;
     }
 
 }
