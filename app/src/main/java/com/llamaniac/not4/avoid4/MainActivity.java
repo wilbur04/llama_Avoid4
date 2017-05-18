@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void launchActivity() {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, SetupActivity.class);
+        this.startActivity(intent);
     }
 }

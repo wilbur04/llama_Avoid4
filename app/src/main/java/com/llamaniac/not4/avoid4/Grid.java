@@ -11,6 +11,8 @@ public class Grid {
     private boolean player2lost;
     private int length;
 
+
+
     public Grid() {
         length = 5;
         board = new int[length][length];
@@ -353,4 +355,6 @@ public class Grid {
         }
         return 0;
     }
+
+
 }

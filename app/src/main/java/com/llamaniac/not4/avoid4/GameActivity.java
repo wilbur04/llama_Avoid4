@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         game = new Grid();
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
         player_turn_string.setTextColor(color_player1);
-
+        player_turn_string.setText(currentplayersName()+ "'s Turn");
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
         c3a = (Button) findViewById(R.id.c3a);
@@ -266,7 +266,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updatePlayer() {
         currentPlayer = game.getActivePlayer();
-        player_turn_string.setText("Player " + currentPlayer + "'s Turn");
+        player_turn_string.setText(currentplayersName()+ "'s Turn");
         if (currentPlayer==1) {
             player_turn_string.setTextColor(color_player1);
         } else {
@@ -312,12 +312,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         currentBoard = game.getBoard();
         concatNameAndSet();
         if (game.getPlayer1lost()) {
-            popUpMsg = "Player 2 Won";
+            popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player2);
             endGame();
         } else if (game.getPlayer2lost()) {
-            popUpMsg = "Player 1 Won";
+            popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player1);
             endGame();
@@ -329,6 +329,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         game.add(column);
         updatePlayer();
         updateGrid();
+    }
+
+    private String currentplayersName(){
+        switch (currentPlayer) {
+            case 1:
+                return NameStore.INSTANCE.getPlayer1Name();
+            case 2:
+                return NameStore.INSTANCE.getPlayer2Name();
+            default:
+                return NameStore.INSTANCE.getPlayer1Name();
+        }
     }
 
 }
