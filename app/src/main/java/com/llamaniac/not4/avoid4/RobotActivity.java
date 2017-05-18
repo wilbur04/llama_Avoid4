@@ -2,7 +2,6 @@ package com.llamaniac.not4.avoid4;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,13 +9,14 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener{
+public class RobotActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
             , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e, restart_button;
     private TextView player_turn_string;
     private int currentPlayer;
     private int[][] currentBoard;
-    private Grid game;
+    public static Grid game;
+    private AI jimmy;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
@@ -31,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         color_player2 = getResources().getColor(R.color.player_2);
 
         game = new Grid();
+        jimmy = new AI();
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
         player_turn_string.setTextColor(color_player1);
 
@@ -324,11 +325,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     private void columnBtn(int column) {
         game.add(column);
         updatePlayer();
         updateGrid();
     }
-
 }

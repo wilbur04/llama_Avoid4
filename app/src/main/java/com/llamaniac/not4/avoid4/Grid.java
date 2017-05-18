@@ -93,7 +93,7 @@ public class Grid {
      *  To add to the next empty row in a column
      * @param col
      */
-    public void add(int col) {
+    public boolean add(int col) {
         if (!columnIsFull(col)) {
             board[getNextRow(col)][col] = this.getActivePlayer();
             if (hasLost(1)) {
@@ -103,7 +103,8 @@ public class Grid {
             } else {
                 this.changeActivePlayer();
             }
-        }
+            return true;
+        } return false;
     }
 
     public boolean boardIsFull() {
