@@ -20,10 +20,10 @@ public class Grid {
         cleanGrid();
     }
 
-    public boolean getPlayer1lost() {
+    private boolean getPlayer1lost() {
         return player1lost;
     }
-    public boolean getPlayer2lost() {
+    private boolean getPlayer2lost() {
         return player2lost;
     }
 
@@ -77,7 +77,7 @@ public class Grid {
      * @return
      */
     private int getNextRow(int col) {
-        for (int i = length-1; i >= 0; i--){
+        for (int i = length-1; i >= 0; i--) {
             if (board[i][col] == 0) {
                 return i;
             }
@@ -110,7 +110,7 @@ public class Grid {
     public boolean boardIsFull() {
         for (int x = 0; x < length; x++) {
             for (int y = 0; y < length; y++) {
-                if (board[y][x] == 0){
+                if (board[y][x] == 0) {
                     return false;
                 }
             }
