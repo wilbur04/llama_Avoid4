@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
-    private ImageView p1_image, p2_image;
+    private ImageView player_icon, p2_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -36,9 +36,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         game = new Grid();
 
-        p1_image = (ImageView) findViewById(R.id.p1imageView);
+        player_icon = (ImageView) findViewById(R.id.p1imageView);
         //p2_image = (ImageView) findViewById(R.id.p2imageView);
-        p1_image.setColorFilter(color_player1);
+        player_icon.setColorFilter(color_player1);
 
 
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
@@ -281,16 +281,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             player_turn_string.setText(currentplayersName() + "'s Turn");
             if (currentPlayer == 1) {
                 player_turn_string.setTextColor(color_player1);
-                p1_image.setColorFilter(color_player1);
+                player_icon.setColorFilter(color_player1);
 
             } else {
                 player_turn_string.setTextColor(color_player2);
-                p1_image.setColorFilter(color_player2);
+                player_icon.setColorFilter(color_player2);
 
             }
+
         }else{
             player_turn_string.setText("Game Over");
-            p1_image.setColorFilter(getResources().getColor(R.color.disable));
+            player_icon.setColorFilter(getResources().getColor(R.color.disable));
             endGame();
         }
     }
@@ -336,13 +337,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player2);
-            p1_image.setColorFilter(color_player2);
+            player_icon.setColorFilter(color_player2);
             endGame();
         } else if (game.getPlayer2lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player1);
-            p1_image.setColorFilter(color_player1);
+            player_icon.setColorFilter(color_player1);
             endGame();
         }
     }
