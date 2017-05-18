@@ -104,7 +104,7 @@ public class Grid {
                 //// TODO: 18/05/2017 notify that p1 has lost
                 System.out.println("Player1 lost");
 
-            }else if (p1HasLost(getNextRow(col),col)){
+            }else if (p2HasLost(getNextRow(col),col)){
 
                 //// TODO: 18/05/2017 notify p2 has lost
                 System.out.println("Player2 lost");
@@ -134,7 +134,6 @@ public class Grid {
 
     public boolean p1HasLost(int row, int col) {
         int count1, count2 = 0;
-        searchHorizontalLost();
         if (searchHorizontalLost()==1){
             System.out.println("sussecc");
             player1lost = true;
@@ -157,26 +156,30 @@ public class Grid {
             player1lost = true;
             return true;
         }
-
         return false;
     }
 
-    public boolean p2HasLost(){
+    public boolean p2HasLost(int row, int col) {
+        int count1, count2 = 0;
         if (searchHorizontalLost()==2){
-            System.out.println("sussecc2");
+            System.out.println("sussecc");
             player2lost = true;
             return true;
         }
-        else if (searchVerticalLost()==2){
-            System.out.println("sussecc2");
+
+        if (searchVerticalLost()==2){
+            System.out.println("sussecc");
             player2lost = true;
             return true;
-        }else  if (checkBLTR()==2){
-            System.out.println("sussecc2 bltr");
+        }
+
+        if (checkTLBR()==2) {
+            System.out.println("2 has lost tlbr");
             player2lost = true;
-            return  true;
-        }else if (checkTLBR() ==2){
-            System.out.println("sussecc2");
+            return true;
+        }
+        if (checkBLTR() ==2){
+            System.out.println("2 has lost bltr");
             player2lost = true;
             return true;
         }
