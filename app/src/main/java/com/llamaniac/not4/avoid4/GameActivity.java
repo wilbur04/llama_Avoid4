@@ -17,7 +17,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int currentPlayer;
     private int[][] currentBoard;
     private Grid game;
-    private int color_green, color_blue;
+    private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
 
@@ -27,11 +27,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
 
 
-        color_green = getResources().getColor(R.color.player_1);
-        color_blue = getResources().getColor(R.color.player_2);
+        color_player1 = getResources().getColor(R.color.player_1);
+        color_player2 = getResources().getColor(R.color.player_2);
 
         game = new Grid();
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
+        player_turn_string.setTextColor(color_player1);
 
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
@@ -268,6 +269,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void updatePlayer() {
         currentPlayer = game.getActivePlayer();
         player_turn_string.setText("Player " + currentPlayer + "'s Turn");
+        if (currentPlayer==1) {
+            player_turn_string.setTextColor(color_player1);
+        } else {
+            player_turn_string.setTextColor(color_player2);
+        }
     }
 
 

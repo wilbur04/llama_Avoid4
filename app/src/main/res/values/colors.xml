@@ -5,6 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
-    <color name="player_1">#43ea89</color>
-    <color name="player_2">#5c43d6</color>
+    <color name="player_1">#dd27ceff</color>
+    <color name="player_2">#ddfa6b2e</color>
 </resources>
