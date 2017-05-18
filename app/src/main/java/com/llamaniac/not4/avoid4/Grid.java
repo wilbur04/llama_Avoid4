@@ -134,7 +134,12 @@ public class Grid {
         }
 
         if (checkTLBR()==1) {
-            System.out.println("1 has lost");
+            System.out.println("1 has lost tlbr");
+            return true;
+        }
+        if (checkBLTR() ==1){
+            System.out.println("1 has lost bltr");
+
             return true;
         }
 
@@ -147,6 +152,12 @@ public class Grid {
             return true;
         }
         else if (searchVerticalLost()==2){
+            System.out.println("sussecc2");
+            return true;
+        }else  if (checkBLTR()==2){
+            System.out.println("sussecc2 bltr");
+            return  true;
+        }else if (checkTLBR() ==2){
             System.out.println("sussecc2");
             return true;
         }
@@ -188,13 +199,10 @@ public class Grid {
 
     public int searchVerticalLost(){
         int count1 = 0, count2 = 0;
-        System.out.println("print countsd"+count1);
 
         for (int x=0; x<board.length; x++){
-            System.out.println("print count"+count1);
             for (int y=0; y<board.length; y++){
                 if (board[y][x]==1){
-                    System.out.println("in count1"+count2);
                     count1++;
                     count2=0;
                 }else if (board[y][x]==2){
@@ -206,11 +214,9 @@ public class Grid {
                 }
 
                 if (count1 == 4 ){
-                    System.out.println("print count1"+count1);
                     return 1;
                 }
                 else if (count2 == 4){
-                    System.out.println("print count2"+count2);
                     return 2;
                 }
 

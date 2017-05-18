@@ -38,7 +38,19 @@ public class ExampleUnitTest {
 
     @Test
     public void testAdd(){
-        testGrid.add(4);
+        testGrid.add(0);
+        testGrid.add(1);
+        testGrid.add(1);
+        testGrid.add(1);
+        testGrid.add(2);
+        testGrid.add(2);
+        testGrid.add(2);
+        testGrid.add(3);
+        testGrid.add(3);
+        testGrid.add(3);
+        testGrid.add(3);
+        testGrid.add(3);
+
     }
 
 
