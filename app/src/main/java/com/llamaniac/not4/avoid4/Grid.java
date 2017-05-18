@@ -12,9 +12,8 @@ public class Grid {
 
     public Grid() {
         board = new int[5][5];
-        cleanGrid();
         activePlayer = 1;
-
+        cleanGrid();
     }
 
     public boolean getPlayer1lost() {
@@ -62,10 +61,10 @@ public class Grid {
     /**
      * To swap the players.
      */
-    public void changeActivePlayer(){
-        if (this.getActivePlayer()==1){
+    public void changeActivePlayer() {
+        if (this.getActivePlayer() == 1) {
             this.setActivePlayer(2);
-        }else if (this.getActivePlayer()==2){
+        } else {
             this.setActivePlayer(1);
         }
     }
@@ -75,53 +74,40 @@ public class Grid {
      * @param col
      * @return
      */
-    public int getNextRow(int col){
-        for (int i=board.length-1; i>=0; i--){
-            if (board[i][col]==0){
+    public int getNextRow(int col) {
+        for (int i = board.length-1; i >= 0; i--){
+            if (board[i][col] == 0) {
                 return i;
             }
         }
         return -1;
     }
 
-    public boolean columnIsFull(int col){
-        if (getNextRow(col)==-1){
-            return true;
-        }else{
-            return false;
-        }
+    public boolean columnIsFull(int col) {
+        return getNextRow(col) == -1;
     }
 
     /**
      *  To add to the next empty row in a column
      * @param col
      */
-    public void add(int col){
+    public void add(int col) {
         if (!columnIsFull(col)) {
             board[getNextRow(col)][col] = this.getActivePlayer();
-            if (p1HasLost(getNextRow(col),col)){
-
-                //// TODO: 18/05/2017 notify that p1 has lost
+            if (p1HasLost()) {
                 System.out.println("Player1 lost");
-
-            }else if (p2HasLost(getNextRow(col),col)){
-
-                //// TODO: 18/05/2017 notify p2 has lost
+            } else if (p2HasLost()) {
                 System.out.println("Player2 lost");
-
-            }
-            else{
+            } else {
                 this.changeActivePlayer();
             }
         } else {
             //todo:  what happens when it is full?
             System.out.println("full");
         }
-        printGrid();
-
     }
 
-    public boolean boardIsFull(){
+    public boolean boardIsFull() {
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board.length; y++) {
                 if (board[y][x]==0){
@@ -132,121 +118,101 @@ public class Grid {
         return true;
     }
 
-    public boolean p1HasLost(int row, int col) {
-        int count1, count2 = 0;
-        if (searchHorizontalLost()==1){
-            System.out.println("sussecc");
+    private boolean p1HasLost() {
+        if (searchHorizontalLost() == 1) {
             player1lost = true;
             return true;
         }
 
-        if (searchVerticalLost()==1){
-            System.out.println("sussecc");
+        if (searchVerticalLost() == 1) {
             player1lost = true;
             return true;
         }
 
-        if (checkTLBR()==1) {
-            System.out.println("1 has lost tlbr");
+        if (checkTLBR() == 1) {
             player1lost = true;
             return true;
         }
-        if (checkBLTR() ==1){
-            System.out.println("1 has lost bltr");
+        if (checkBLTR() == 1) {
             player1lost = true;
             return true;
         }
         return false;
     }
 
-    public boolean p2HasLost(int row, int col) {
-        int count1, count2 = 0;
-        if (searchHorizontalLost()==2){
-            System.out.println("sussecc");
+    private boolean p2HasLost() {
+        if (searchHorizontalLost() == 2) {
             player2lost = true;
             return true;
         }
 
-        if (searchVerticalLost()==2){
-            System.out.println("sussecc");
+        if (searchVerticalLost() == 2) {
             player2lost = true;
             return true;
         }
 
-        if (checkTLBR()==2) {
-            System.out.println("2 has lost tlbr");
+        if (checkTLBR() == 2) {
             player2lost = true;
             return true;
         }
-        if (checkBLTR() ==2){
-            System.out.println("2 has lost bltr");
+        if (checkBLTR() ==2 ) {
             player2lost = true;
             return true;
         }
         return false;
     }
 
-    public int searchHorizontalLost(){
+    private int searchHorizontalLost() {
         int count1 = 0, count2 = 0;
-
-        for (int x=0; x<board.length; x++){
-            for (int y=0; y<board.length; y++){
-                if (board[x][y]==1){
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board.length; y++) {
+                if (board[x][y] == 1) {
                     count1++;
-                    count2=0;
-                }else if (board[x][y]==2){
+                    count2 = 0;
+                } else if (board[x][y] == 2) {
                     count2++;
-                    count1=0;
+                    count1 = 0;
                 } else {
-                    count1=0;
-                    count2=0;
+                    count1 = 0;
+                    count2 = 0;
                 }
-
-                if (count1 == 4 ){
+                if (count1 == 4 ) {
                     return 1;
                 }
-                else if (count2 == 4){
+                else if (count2 == 4) {
                     return 2;
                 }
-
             }
-
             count1 = 0;
             count2 = 0;
-
         }
         return 0;
     }
 
 
-    public int searchVerticalLost(){
+    private int searchVerticalLost() {
         int count1 = 0, count2 = 0;
-
-        for (int x=0; x<board.length; x++){
-            for (int y=0; y<board.length; y++){
-                if (board[y][x]==1){
+        for (int x = 0; x < board.length; x++) {
+            for (int y=0; y < board.length; y++) {
+                if (board[y][x] == 1) {
                     count1++;
-                    count2=0;
-                }else if (board[y][x]==2){
+                    count2 = 0;
+                } else if (board[y][x] == 2) {
                     count2++;
-                    count1=0;
+                    count1 = 0;
                 } else {
-                    count1=0;
-                    count2=0;
+                    count1 = 0;
+                    count2 = 0;
                 }
-
                 if (count1 == 4 ){
                     return 1;
                 }
                 else if (count2 == 4){
                     return 2;
                 }
-
             }
-
             count1 = 0;
             count2 = 0;
-
         }
         return 0;
     }
@@ -418,6 +384,4 @@ public class Grid {
         }
         return 0;
     }
-
 }
-
