@@ -44,14 +44,14 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
         String p1name, p2name;
         p1name = ((TextView) findViewById(R.id.player1Name)).getText().toString();
         if (p1name.equals("")){
-            NameStore.INSTANCE.setPlayer1Name("Player1");
+            NameStore.INSTANCE.setPlayer1Name("Player 1");
         }else{
             NameStore.INSTANCE.setPlayer1Name(p1name);
         }
 
         p2name = ((TextView) findViewById(R.id.player2Name)).getText().toString();
         if (p2name.equals("")){
-            NameStore.INSTANCE.setPlayer2Name("Player2");
+            NameStore.INSTANCE.setPlayer2Name("Player 2");
         }else{
             NameStore.INSTANCE.setPlayer2Name(p2name);
         }
