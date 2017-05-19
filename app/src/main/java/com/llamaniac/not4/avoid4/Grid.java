@@ -10,12 +10,14 @@ public class Grid {
     private boolean player1lost;
     private boolean player2lost;
     private int length;
+    private int[][] tempBoard;
 
 
 
     public Grid() {
         length = 5;
         board = new int[length][length];
+        tempBoard = new int[length][length];
         player1lost = false;
         player2lost = false;
         activePlayer = 1;
@@ -35,6 +37,19 @@ public class Grid {
                 board[y][x] = 0;
             }
         }
+    }
+
+    public void setTempBoard() {
+        for(int i=0; i<board.length; i++)
+            for(int j=0; j<board.length; j++)
+                tempBoard[i][j]=board[i][j];
+    }
+    public void restoreBoardState() {
+        for(int i=0; i<tempBoard.length; i++)
+            for(int j=0; j<tempBoard.length; j++)
+                board[i][j]=tempBoard[i][j];
+        player2lost = false;
+        setActivePlayer(2);
     }
 
     public int[][] getBoard() {
@@ -87,26 +102,40 @@ public class Grid {
         return -1;
     }
 
-    private boolean columnIsFull(int col) {
+
+    public boolean columnIsFull(int col) {
         return getNextRow(col) == -1;
     }
 
     /**
      *  To add to the next empty row in a column
      * @param col
+     * @return false if board is full, else true
      */
     public boolean add(int col) {
         if (!columnIsFull(col)) {
             board[getNextRow(col)][col] = this.getActivePlayer();
             if (hasLost(1)) {
                 player1lost = true;
+                return true;
             } else if (hasLost(2)) {
                 player2lost = true;
+                return true;
             } else {
                 this.changeActivePlayer();
             }
-            return true;
+            return false;
         } return false;
+    }
+
+    public boolean columnIsDead(int column) {
+        setTempBoard();
+        if (add(column)) {
+            restoreBoardState();
+            return true;
+        }
+        restoreBoardState();
+        return false;
     }
 
     public boolean boardIsFull() {

@@ -20,12 +20,12 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
+    public static final String TAG = RobotActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
 
         color_player1 = getResources().getColor(R.color.player_1);
         color_player2 = getResources().getColor(R.color.player_2);
@@ -34,7 +34,15 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         jimmy = new AI();
         player_turn_string = (TextView)findViewById(R.id.player_turn_string);
         player_turn_string.setTextColor(color_player1);
+        buttons = new HashMap<>();
+        restart_button = (Button) findViewById(R.id.restart_button);
+        restart_button.setOnClickListener(this);
 
+        initColumnButtons();
+
+    }
+
+    private void initColumnButtons() {
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
         c3a = (Button) findViewById(R.id.c3a);
@@ -65,8 +73,6 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         c4e = (Button) findViewById(R.id.c4e);
         c5e = (Button) findViewById(R.id.c5e);
 
-        restart_button = (Button) findViewById(R.id.restart_button);
-
         c1a.setOnClickListener(this);
         c2a.setOnClickListener(this);
         c3a.setOnClickListener(this);
@@ -96,10 +102,6 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         c3e.setOnClickListener(this);
         c4e.setOnClickListener(this);
         c5e.setOnClickListener(this);
-
-        restart_button.setOnClickListener(this);
-
-        buttons = new HashMap<>();
 
         buttons.put("c1a" ,c1a);
         buttons.put("c1b" ,c1b);
@@ -132,13 +134,6 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         buttons.put("c5e" ,c5e);
     }
 
-    private void updateView() {
-        int[][] currentBoard = game.getBoard();
-        int currentPlayer = game.getActivePlayer();
-        player_turn_string.setText("Player " + currentPlayer + "'s Turn");
-
-    }
-
     private void endGame() {
         for(Map.Entry<String, Button> entry : buttons.entrySet()) {
             String key = entry.getKey();
@@ -147,8 +142,13 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         }
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
     }
-
-
+    private void setButtonsClickable(boolean state) {
+        for(Map.Entry<String, Button> entry : buttons.entrySet()) {
+            String key = entry.getKey();
+            Button value = entry.getValue();
+            value.setClickable(state);
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -309,7 +309,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             return "e";
         } return "z";
     }
-    private void updateGrid() {
+
+    private boolean updateGrid() {
         currentBoard = game.getBoard();
         concatNameAndSet();
         if (game.getPlayer1lost()) {
@@ -317,17 +318,37 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player2);
             endGame();
+            return true;
         } else if (game.getPlayer2lost()) {
             popUpMsg = "Player 1 Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player1);
             endGame();
+            return true;
         }
+        return false;
     }
 
     private void columnBtn(int column) {
         game.add(column);
         updatePlayer();
-        updateGrid();
+        if (!updateGrid()) {
+            robotTurn();
+        }
+    }
+    private void robotTurn() {
+        //delay
+        setButtonsClickable(false);
+        int secs = 1; // Delay in seconds
+        Utils.delay(secs, new Utils.DelayCallback() {
+            @Override
+            public void afterDelay() {
+                jimmy.makeMove();
+                updatePlayer();
+                if (!updateGrid()) {
+                    setButtonsClickable(true);
+                }
+            }
+        });
     }
 }
