@@ -330,10 +330,11 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void columnBtn(int column) {
-        game.add(column);
-        updatePlayer();
-        if (!updateGrid()) {
-            robotTurn();
+        if (game.add(column) > 0) {
+            updatePlayer();
+            if (!updateGrid()) {
+                robotTurn();
+            }
         }
     }
     private void robotTurn() {

@@ -112,25 +112,25 @@ public class Grid {
      * @param col
      * @return false if board is full, else true
      */
-    public boolean add(int col) {
+    public int add(int col) {
         if (!columnIsFull(col)) {
             board[getNextRow(col)][col] = this.getActivePlayer();
             if (hasLost(1)) {
                 player1lost = true;
-                return true;
+                return 1;
             } else if (hasLost(2)) {
                 player2lost = true;
-                return true;
+                return 1;
             } else {
                 this.changeActivePlayer();
             }
-            return false;
-        } return false;
+            return 2;
+        } return 0;
     }
 
     public boolean columnIsDead(int column) {
         setTempBoard();
-        if (add(column)) {
+        if (add(column) == 1) {
             restoreBoardState();
             return true;
         }
