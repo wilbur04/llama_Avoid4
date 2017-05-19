@@ -11,12 +11,12 @@
         android:fontFamily="sans-serif"
         android:text="Player 1's turn"
         android:textSize="24sp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginBottom="32dp"
         android:layout_alignBottom="@+id/p1imageView"
-        android:layout_alignLeft="@+id/restart_button"
-        android:layout_alignStart="@+id/restart_button"
-        android:layout_marginBottom="30dp" />
+        android:layout_toRightOf="@+id/p1imageView"
+        android:layout_toEndOf="@+id/p1imageView"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
