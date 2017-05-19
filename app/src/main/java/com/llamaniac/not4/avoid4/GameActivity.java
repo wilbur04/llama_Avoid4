@@ -282,13 +282,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             if (currentPlayer == 1) {
                 player_turn_string.setTextColor(color_player1);
                 player_icon.setColorFilter(color_player1);
-
             } else {
                 player_turn_string.setTextColor(color_player2);
                 player_icon.setColorFilter(color_player2);
-
             }
-
         }else{
             player_turn_string.setText("Game Over");
             player_icon.setColorFilter(getResources().getColor(R.color.disable));
