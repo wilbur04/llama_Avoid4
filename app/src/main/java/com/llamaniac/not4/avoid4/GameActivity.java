@@ -2,7 +2,6 @@ package com.llamaniac.not4.avoid4;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,19 +10,17 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.security.AccessController.getContext;
-
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
             , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e, restart_button;
-    private TextView player_turn_string;
+    private TextView player1_turn_string, player2_turn_string ,notify_text;
     private int currentPlayer;
     private int[][] currentBoard;
     private Grid game;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
-    private ImageView player_icon, p2_image;
+    private ImageView p1_icon, p2_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -36,14 +33,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         game = new Grid();
 
-        player_icon = (ImageView) findViewById(R.id.p1imageView);
-        //p2_image = (ImageView) findViewById(R.id.p2imageView);
-        player_icon.setColorFilter(color_player1);
+        p1_icon = (ImageView) findViewById(R.id.p1imageView);
+        p2_icon = (ImageView) findViewById(R.id.p2imageView);
+        p1_icon.setColorFilter(color_player1);
+        p2_icon.setColorFilter(getResources().getColor(R.color.disable));
 
 
-        player_turn_string = (TextView)findViewById(R.id.player_turn_string);
-        player_turn_string.setTextColor(color_player1);
-        player_turn_string.setText(currentplayersName()+ "'s Turn");
+        player1_turn_string = (TextView)findViewById(R.id.player1_turn_string);
+        player1_turn_string.setTextColor(color_player1);
+        player1_turn_string.setText(NameStore.INSTANCE.getPlayer1Name());
+
+        notify_text = (TextView)findViewById(R.id.nofify_text);
+        notify_text.setText("");
+
+        player2_turn_string = (TextView)findViewById(R.id.player2_turn_string);
+        player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
+        player2_turn_string.setText(NameStore.INSTANCE.getPlayer2Name());
 
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
@@ -145,7 +150,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void updateView() {
         int[][] currentBoard = game.getBoard();
         int currentPlayer = game.getActivePlayer();
-        player_turn_string.setText("Player " + currentPlayer + "'s Turn");
+        //player_turn_string.setText("Player " + currentPlayer + "'s Turn");
 
     }
 
@@ -278,17 +283,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void updatePlayer() {
         if(!game.boardIsFull()) {
             currentPlayer = game.getActivePlayer();
-            player_turn_string.setText(currentplayersName() + "'s Turn");
+            //player_turn_string.setText(currentplayersName() + "'s Turn");
             if (currentPlayer == 1) {
-                player_turn_string.setTextColor(color_player1);
-                player_icon.setColorFilter(color_player1);
+                player1_turn_string.setTextColor(color_player1);
+                player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
+                p1_icon.setColorFilter(color_player1);
+                p2_icon.setColorFilter(getResources().getColor(R.color.disable));
             } else {
-                player_turn_string.setTextColor(color_player2);
-                player_icon.setColorFilter(color_player2);
+                player2_turn_string.setTextColor(color_player2);
+                player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
+                p2_icon.setColorFilter(color_player2);
+                p1_icon.setColorFilter(getResources().getColor(R.color.disable));
             }
         }else{
-            player_turn_string.setText("Game Over");
-            player_icon.setColorFilter(getResources().getColor(R.color.disable));
+            notify_text.setText("Game Over");
+            player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
+            player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
+            p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+            p2_icon.setColorFilter(getResources().getColor(R.color.disable));
             endGame();
         }
     }
@@ -332,15 +344,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         concatNameAndSet();
         if (game.getPlayer1lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
-            player_turn_string.setText(popUpMsg);
-            player_turn_string.setTextColor(color_player2);
-            player_icon.setColorFilter(color_player2);
+            notify_text.setText(popUpMsg);
+            notify_text.setTextColor(color_player2);
+            p2_icon.setColorFilter(color_player2);
+            p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+            player2_turn_string.setTextColor(color_player1);
+            player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
             endGame();
         } else if (game.getPlayer2lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
-            player_turn_string.setText(popUpMsg);
-            player_turn_string.setTextColor(color_player1);
-            player_icon.setColorFilter(color_player1);
+            notify_text.setText(popUpMsg);
+            notify_text.setTextColor(color_player1);
+            p1_icon.setColorFilter(color_player1);
+            p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+            player1_turn_string.setTextColor(color_player1);
+            player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
             endGame();
         }
     }

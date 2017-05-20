@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -22,6 +23,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     private HashMap<String, Button> buttons;
     private String popUpMsg;
     public static final String TAG = RobotActivity.class.getSimpleName();
+    private ImageView p1_icon, p2_icon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -31,9 +34,15 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         color_player1 = getResources().getColor(R.color.player_1);
         color_player2 = getResources().getColor(R.color.player_2);
 
+        p1_icon = (ImageView) findViewById(R.id.p1imageView);
+        p2_icon = (ImageView) findViewById(R.id.p2imageView);
+        p1_icon.setColorFilter(color_player1);
+        p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+
+
         game = new Grid();
         jimmy = new AI();
-        player_turn_string = (TextView)findViewById(R.id.player_turn_string);
+        player_turn_string = (TextView)findViewById(R.id.player1_turn_string);
         player_turn_string.setTextColor(color_player1);
         buttons = new HashMap<>();
         restart_button = (Button) findViewById(R.id.restart_button);
@@ -268,11 +277,20 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
 
     private void updatePlayer() {
         currentPlayer = game.getActivePlayer();
-        player_turn_string.setText("Player " + currentPlayer + "'s Turn");
-        if (currentPlayer==1) {
-            player_turn_string.setTextColor(color_player1);
-        } else {
-            player_turn_string.setTextColor(color_player2);
+        if(!game.boardIsFull()) {
+            player_turn_string.setText("Player " + currentPlayer + "'s Turn");
+            if (currentPlayer == 1) {
+                player_turn_string.setTextColor(color_player1);
+                p1_icon.setColorFilter(color_player1);
+            } else {
+                player_turn_string.setTextColor(color_player2);
+                p2_icon.setColorFilter(color_player2);
+            }
+        }else{
+            player_turn_string.setText("Game Over");
+            p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+            p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+            endGame();
         }
     }
 
@@ -318,12 +336,15 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             popUpMsg = "Player 2 Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player2);
+            p2_icon.setColorFilter(color_player2);
+
             endGame();
             return true;
         } else if (game.getPlayer2lost()) {
             popUpMsg = "Player 1 Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player1);
+            p1_icon.setColorFilter(color_player1);
             endGame();
             return true;
         }
