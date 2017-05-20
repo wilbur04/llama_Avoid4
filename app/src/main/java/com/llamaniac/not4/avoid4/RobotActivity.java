@@ -14,10 +14,10 @@ import java.util.Map;
 public class RobotActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
             , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e, restart_button;
-    private TextView player_turn_string;
+    private TextView player_turn_string, jimmy_turn_string, notify_text;
     private int currentPlayer;
     private int[][] currentBoard;
-    public static Grid grid;
+    public static Grid game;
     private AI jimmy;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
@@ -37,13 +37,24 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         p1_icon = (ImageView) findViewById(R.id.p1imageView);
         p2_icon = (ImageView) findViewById(R.id.p2imageView);
         p1_icon.setColorFilter(color_player1);
-        p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+        p2_icon.setColorFilter(getResources().getColor(R.color.disable));
 
 
-        grid = new Grid();
-        jimmy = new AI();
         player_turn_string = (TextView)findViewById(R.id.player1_turn_string);
         player_turn_string.setTextColor(color_player1);
+        player_turn_string.setText("You");
+
+        notify_text = (TextView)findViewById(R.id.nofify_text);
+        notify_text.setText("");
+
+        jimmy_turn_string = (TextView)findViewById(R.id.player2_turn_string);
+        jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
+        jimmy_turn_string.setText("Jimmy");
+
+
+        game = new Grid();
+        jimmy = new AI();
+
         buttons = new HashMap<>();
         restart_button = (Button) findViewById(R.id.restart_button);
         restart_button.setOnClickListener(this);
@@ -150,6 +161,11 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             Button value = entry.getValue();
             value.setClickable(false);
         }
+        player_turn_string.setTextColor(getResources().getColor(R.color.disable));
+        jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
+        p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+        p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
     }
     private void setButtonsClickable(boolean state) {
@@ -276,20 +292,22 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void updatePlayer() {
-        currentPlayer = grid.getActivePlayer();
-        if(!grid.boardIsFull()) {
-            player_turn_string.setText("Player " + currentPlayer + "'s Turn");
-            if (currentPlayer == 1) {
+        currentPlayer = game.getActivePlayer();
+        if(!game.boardIsFull()) {
+
+            if (currentPlayer == 2) {
+                jimmy_turn_string.setTextColor(color_player2);
+                p2_icon.setColorFilter(color_player2);
+                p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+                player_turn_string.setTextColor(getResources().getColor(R.color.disable));
+            } else {
                 player_turn_string.setTextColor(color_player1);
                 p1_icon.setColorFilter(color_player1);
-            } else {
-                player_turn_string.setTextColor(color_player2);
-                p2_icon.setColorFilter(color_player2);
+                p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+                jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
             }
         }else{
-            player_turn_string.setText("Game Over");
-            p1_icon.setColorFilter(getResources().getColor(R.color.disable));
-            p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+            notify_text.setText("Game Over");
             endGame();
         }
     }
@@ -330,20 +348,19 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean updateGrid() {
-        currentBoard = grid.getBoard();
+        currentBoard = game.getBoard();
         concatNameAndSet();
-        if (grid.getPlayer1lost()) {
-            popUpMsg = "Player 2 Won";
-            player_turn_string.setText(popUpMsg);
-            player_turn_string.setTextColor(color_player2);
-            p2_icon.setColorFilter(color_player2);
+        if (game.getPlayer1lost()) {
+            popUpMsg = "Jimmy Won";
+            notify_text.setText(popUpMsg);
+            notify_text.setTextColor(color_player2);
+
             endGame();
             return true;
-        } else if (grid.getPlayer2lost()) {
-            popUpMsg = "Player 1 Won";
-            player_turn_string.setText(popUpMsg);
-            player_turn_string.setTextColor(color_player1);
-            p1_icon.setColorFilter(color_player1);
+        } else if (game.getPlayer2lost()) {
+            popUpMsg = "You Won";
+            notify_text.setText(popUpMsg);
+            notify_text.setTextColor(color_player1);
             endGame();
             return true;
         }
@@ -351,7 +368,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void columnBtn(int column) {
-        if (grid.add(column) > 0) {
+        if (game.add(column) > 0) {
             updatePlayer();
             if (!updateGrid()) {
                 robotTurn();
@@ -366,8 +383,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterDelay() {
                 jimmy.makeMove();
-                Log.d(RobotActivity.TAG, "Player 1 lost: " + grid.getPlayer1lost());
-                Log.d(RobotActivity.TAG, "Player 2 lost: " + grid.getPlayer2lost());
+                Log.d(RobotActivity.TAG, "Player 1 lost: " + game.getPlayer1lost());
+                Log.d(RobotActivity.TAG, "Player 2 lost: " + game.getPlayer2lost());
                 updatePlayer();
                 if (!updateGrid()) {
                     setButtonsClickable(true);

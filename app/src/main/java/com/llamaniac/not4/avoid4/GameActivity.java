@@ -160,6 +160,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Button value = entry.getValue();
             value.setClickable(false);
         }
+        player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
+        player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
+        p1_icon.setColorFilter(getResources().getColor(R.color.disable));
+        p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
     }
 
@@ -297,10 +302,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }else{
             notify_text.setText("Game Over");
-            player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
-            player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
-            p1_icon.setColorFilter(getResources().getColor(R.color.disable));
-            p2_icon.setColorFilter(getResources().getColor(R.color.disable));
             endGame();
         }
     }
@@ -346,19 +347,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player2);
-            p2_icon.setColorFilter(color_player2);
-            p1_icon.setColorFilter(getResources().getColor(R.color.disable));
-            player2_turn_string.setTextColor(color_player1);
-            player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
             endGame();
         } else if (game.getPlayer2lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player1);
-            p1_icon.setColorFilter(color_player1);
-            p2_icon.setColorFilter(getResources().getColor(R.color.disable));
-            player1_turn_string.setTextColor(color_player1);
-            player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
             endGame();
         }
     }

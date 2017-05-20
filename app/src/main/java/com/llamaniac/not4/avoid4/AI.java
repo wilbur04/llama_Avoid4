@@ -17,7 +17,7 @@ public class AI {
      */
     public AI() {
         rand = new Random();
-        grid = RobotActivity.grid;
+        grid = RobotActivity.game;
     }
 
     /**

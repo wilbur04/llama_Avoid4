@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Avoid4</string>
     <string name="app_start">Start</string>
-    <string name="vs_jimmy">Vs Jimmy</string>
     <string name="app_play">Play</string>
+
+    <string name="one_player">One Player</string>
+    <string name="two_player">Two Player</string>
 </resources>

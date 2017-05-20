@@ -1,8 +1,6 @@
 package com.llamaniac.not4.avoid4;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +14,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playBtn = (Button)findViewById(R.id.play_button);
+        playBtn = (Button)findViewById(R.id.two_player_button);
         playBtn.setOnClickListener(this);
 
-        playAIBtn = (Button) findViewById(R.id.playAI_button);
+        playAIBtn = (Button) findViewById(R.id.one_player_button);
         playAIBtn.setOnClickListener(this);
     }
 
@@ -27,11 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.play_button:
+            case R.id.two_player_button:
                 launchActivity(SetupActivity.class);
                 break;
 
-            case R.id.playAI_button:
+            case R.id.one_player_button:
                 launchActivity(RobotActivity.class);
                 break;
 
