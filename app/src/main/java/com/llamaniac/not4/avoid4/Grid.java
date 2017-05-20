@@ -30,6 +30,9 @@ public class Grid {
     public boolean getPlayer2lost() {
         return player2lost;
     }
+    public int getLength() {
+        return this.length;
+    }
 
     private void cleanGrid() {
         for (int x = 0; x < length; x++) {

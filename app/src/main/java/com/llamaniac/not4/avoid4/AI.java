@@ -1,20 +1,20 @@
 package com.llamaniac.not4.avoid4;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by Tom on 18/05/2017.
  */
-
 public class AI {
     private Random rand;
     private Grid grid;
     private ArrayList<Integer> checked;
 
-
+    /**
+     * Instantiates a new Ai.
+     */
     public AI() {
         rand = new Random();
         grid = RobotActivity.grid;
@@ -22,11 +22,11 @@ public class AI {
 
     /**
      * Function checks 3 potential moves:
-     *  - Is column full?
-     *  - Will I die if I go there?
-     *  - Does going there stop player from dying?
-     *
-     *  Function will select the top priority move.
+     * - Is column full?
+     * - Will I die if I go there?
+     * - Does going there stop player from dying?
+     * <p>
+     * Function will select the top priority move.
      */
     public void makeMove() {
         checked = new ArrayList<>();
@@ -37,7 +37,7 @@ public class AI {
         ArrayList<Integer> deadColumns = new ArrayList<>();
         ArrayList<Integer> blockedColumns = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < grid.getLength(); i++) {
             if (grid.columnIsFull(i)) { //remove all full columns
                 checked.remove(Integer.valueOf(i));
             } else if (grid.columnIsDead(i)) { //remove all dead columns
@@ -94,7 +94,6 @@ public class AI {
     }
 
     private int getRandom(int min, int max) {
-        int num = rand.nextInt(max - min + 1) + min;
-        return num;
+        return rand.nextInt(max - min + 1) + min;
     }
 }
