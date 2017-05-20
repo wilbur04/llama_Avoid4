@@ -49,6 +49,7 @@ public class Grid {
             for(int j=0; j<tempBoard.length; j++)
                 board[i][j]=tempBoard[i][j];
         player2lost = false;
+        player1lost = false;
         setActivePlayer(2);
     }
 
@@ -80,7 +81,7 @@ public class Grid {
     /**
      * To swap the players.
      */
-    private void changeActivePlayer() {
+    public void changeActivePlayer() {
         if (this.getActivePlayer() == 1) {
             this.setActivePlayer(2);
         } else {

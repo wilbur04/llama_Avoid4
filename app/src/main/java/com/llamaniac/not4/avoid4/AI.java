@@ -28,17 +28,14 @@ public class AI {
         checked = new ArrayList<>();
         reloadChecked();
         int tempNum = getRandom(0, checked.size()-1);
-        int tempCol = checked.get(tempNum);
+        int tempCol = 0;
 
-        HashSet<Integer> hs = new HashSet<>();
-        HashSet<Integer> oo = new HashSet<>();
 
         //remove all full columns
         for (int i=0; i<5; i++) {
             if (g.columnIsFull(i)) {
                 Log.d(RobotActivity.TAG, "going to remove full column " + i);
                 checked.remove(new Integer(i));
-                hs.add(i);
                 Log.d(RobotActivity.TAG, "removed full column " + i);
             }
         }
@@ -47,7 +44,6 @@ public class AI {
         //remove all dead columns
         for (int i=0; i<5; i++) {
             if (g.columnIsDead(i)) {
-                hs.add(i);
                 if (checked.contains(new Integer(i))) {
                     Log.d(RobotActivity.TAG, "going to remove dead column " + i);
                     tempChecked.add(i);
@@ -57,16 +53,35 @@ public class AI {
             }
         }
 
-        Log.d(RobotActivity.TAG, "HS: " + hs.toString());
+        //remove columns blocking
+        ArrayList<Integer> blockedColumns = new ArrayList<>();
+        for (int i=0; i<5; i++) {
+            g.changeActivePlayer();
+            if (g.columnIsDead(i)) {
+                if (checked.contains(new Integer(i))) {
+                    Log.d(RobotActivity.TAG, "adding to blockedColumns: " + i);
+                    blockedColumns.add(i);
+                    checked.remove(new Integer(i));
+                    Log.d(RobotActivity.TAG, "removed from checked: " + i);
+                }
+            }
+        }
 
+
+        String logMsg = "";
         if (checked.size() == 0) {
-            if (tempChecked.size() == 0) {
-                //no moves available
+            if (blockedColumns.size() == 0) {
+                if (tempChecked.size() == 0) {
+                    //no moves available
+                } else {
+                    tempNum = getRandom(0, tempChecked.size() - 1);
+                    tempCol = tempChecked.get(tempNum);
+                    logMsg = "add to temp column " + tempCol;
+                }
             } else {
-                tempNum = getRandom(0, tempChecked.size() - 1);
-                tempCol = tempChecked.get(tempNum);
-                Log.d(RobotActivity.TAG, "add to temp column " + tempCol);
-                g.add(tempCol);
+                tempNum = getRandom(0, blockedColumns.size() - 1);
+                tempCol = blockedColumns.get(tempNum);
+                logMsg = "add to blocked column " + tempCol;
             }
         } else {
             String a = "Available columns = [";
@@ -77,12 +92,15 @@ public class AI {
 
             tempNum = getRandom(0, checked.size() - 1);
             tempCol = checked.get(tempNum);
-            Log.d(RobotActivity.TAG, "add to column " + tempCol);
-            g.add(tempCol);
+            logMsg = "add to column " + tempCol;
         }
 
-    }
 
+        Log.d(RobotActivity.TAG, logMsg);
+        g.add(tempCol);
+        blockedColumns.clear();
+
+    }
 
     private void reloadChecked() {
         checked.clear();

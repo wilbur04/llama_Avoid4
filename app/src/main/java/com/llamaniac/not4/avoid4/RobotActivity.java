@@ -2,6 +2,7 @@ package com.llamaniac.not4.avoid4;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -345,6 +346,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterDelay() {
                 jimmy.makeMove();
+                Log.d(RobotActivity.TAG, "Player 1 lost: " + game.getPlayer1lost());
+                Log.d(RobotActivity.TAG, "Player 2 lost: " + game.getPlayer2lost());
                 updatePlayer();
                 if (!updateGrid()) {
                     setButtonsClickable(true);
