@@ -3,7 +3,6 @@ package com.llamaniac.not4.avoid4;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -12,70 +11,55 @@ import java.util.Random;
 
 public class AI {
     private Random rand;
-    private Grid g;
-    private int tempBoard[][];
+    private Grid grid;
     private ArrayList<Integer> checked;
 
 
     public AI() {
         rand = new Random();
-        g = RobotActivity.game;
+        grid = RobotActivity.grid;
     }
 
-
+    /**
+     * Function checks 3 potential moves:
+     *  - Is column full?
+     *  - Will I die if I go there?
+     *  - Does going there stop player from dying?
+     *
+     *  Function will select the top priority move.
+     */
     public void makeMove() {
-
         checked = new ArrayList<>();
         reloadChecked();
-        int tempNum = getRandom(0, checked.size()-1);
-        int tempCol = 0;
+        int tempNum, tempCol = 0;
+        String logMsg = "", availableColumns = "";
 
-
-        //remove all full columns
-        for (int i=0; i<5; i++) {
-            if (g.columnIsFull(i)) {
-                Log.d(RobotActivity.TAG, "going to remove full column " + i);
-                checked.remove(new Integer(i));
-                Log.d(RobotActivity.TAG, "removed full column " + i);
-            }
-        }
-
-        ArrayList<Integer> tempChecked = new ArrayList<>();
-        //remove all dead columns
-        for (int i=0; i<5; i++) {
-            if (g.columnIsDead(i)) {
-                if (checked.contains(new Integer(i))) {
-                    Log.d(RobotActivity.TAG, "going to remove dead column " + i);
-                    tempChecked.add(i);
-                    checked.remove(new Integer(i));
-                    Log.d(RobotActivity.TAG, "removed dead column " + i);
-                }
-            }
-        }
-
-        //remove columns blocking
+        ArrayList<Integer> deadColumns = new ArrayList<>();
         ArrayList<Integer> blockedColumns = new ArrayList<>();
-        for (int i=0; i<5; i++) {
-            g.changeActivePlayer();
-            if (g.columnIsDead(i)) {
-                if (checked.contains(new Integer(i))) {
-                    Log.d(RobotActivity.TAG, "adding to blockedColumns: " + i);
+
+        for (int i = 0; i < 5; i++) {
+            if (grid.columnIsFull(i)) { //remove all full columns
+                checked.remove(Integer.valueOf(i));
+            } else if (grid.columnIsDead(i)) { //remove all dead columns
+                deadColumns.add(i);
+                checked.remove(Integer.valueOf(i));
+            } else { //remove all 3 block columns
+                grid.changeActivePlayer();
+                if (grid.columnIsDead(i)) {
                     blockedColumns.add(i);
-                    checked.remove(new Integer(i));
-                    Log.d(RobotActivity.TAG, "removed from checked: " + i);
+                    checked.remove(Integer.valueOf(i));
                 }
             }
         }
 
-
-        String logMsg = "";
         if (checked.size() == 0) {
             if (blockedColumns.size() == 0) {
-                if (tempChecked.size() == 0) {
+                if (deadColumns.size() == 0) {
                     //no moves available
+                    logMsg = "no moves available";
                 } else {
-                    tempNum = getRandom(0, tempChecked.size() - 1);
-                    tempCol = tempChecked.get(tempNum);
+                    tempNum = getRandom(0, deadColumns.size() - 1);
+                    tempCol = deadColumns.get(tempNum);
                     logMsg = "add to temp column " + tempCol;
                 }
             } else {
@@ -84,20 +68,20 @@ public class AI {
                 logMsg = "add to blocked column " + tempCol;
             }
         } else {
-            String a = "Available columns = [";
+            availableColumns = "Available columns = [";
             for(int i:checked) {
-                a += i+ " ,";
+                availableColumns += i+ " ,";
             }
-            Log.d(RobotActivity.TAG, a+"]");
+            availableColumns += "]";
 
             tempNum = getRandom(0, checked.size() - 1);
             tempCol = checked.get(tempNum);
             logMsg = "add to column " + tempCol;
         }
 
-
+        Log.d(RobotActivity.TAG, availableColumns);
         Log.d(RobotActivity.TAG, logMsg);
-        g.add(tempCol);
+        grid.add(tempCol);
         blockedColumns.clear();
 
     }

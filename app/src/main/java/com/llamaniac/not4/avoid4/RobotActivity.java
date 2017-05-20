@@ -17,7 +17,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     private TextView player_turn_string;
     private int currentPlayer;
     private int[][] currentBoard;
-    public static Grid game;
+    public static Grid grid;
     private AI jimmy;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
@@ -40,7 +40,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         p1_icon.setColorFilter(getResources().getColor(R.color.disable));
 
 
-        game = new Grid();
+        grid = new Grid();
         jimmy = new AI();
         player_turn_string = (TextView)findViewById(R.id.player1_turn_string);
         player_turn_string.setTextColor(color_player1);
@@ -276,8 +276,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void updatePlayer() {
-        currentPlayer = game.getActivePlayer();
-        if(!game.boardIsFull()) {
+        currentPlayer = grid.getActivePlayer();
+        if(!grid.boardIsFull()) {
             player_turn_string.setText("Player " + currentPlayer + "'s Turn");
             if (currentPlayer == 1) {
                 player_turn_string.setTextColor(color_player1);
@@ -330,17 +330,16 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean updateGrid() {
-        currentBoard = game.getBoard();
+        currentBoard = grid.getBoard();
         concatNameAndSet();
-        if (game.getPlayer1lost()) {
+        if (grid.getPlayer1lost()) {
             popUpMsg = "Player 2 Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player2);
             p2_icon.setColorFilter(color_player2);
-
             endGame();
             return true;
-        } else if (game.getPlayer2lost()) {
+        } else if (grid.getPlayer2lost()) {
             popUpMsg = "Player 1 Won";
             player_turn_string.setText(popUpMsg);
             player_turn_string.setTextColor(color_player1);
@@ -352,7 +351,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void columnBtn(int column) {
-        if (game.add(column) > 0) {
+        if (grid.add(column) > 0) {
             updatePlayer();
             if (!updateGrid()) {
                 robotTurn();
@@ -367,8 +366,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterDelay() {
                 jimmy.makeMove();
-                Log.d(RobotActivity.TAG, "Player 1 lost: " + game.getPlayer1lost());
-                Log.d(RobotActivity.TAG, "Player 2 lost: " + game.getPlayer2lost());
+                Log.d(RobotActivity.TAG, "Player 1 lost: " + grid.getPlayer1lost());
+                Log.d(RobotActivity.TAG, "Player 2 lost: " + grid.getPlayer2lost());
                 updatePlayer();
                 if (!updateGrid()) {
                     setButtonsClickable(true);
