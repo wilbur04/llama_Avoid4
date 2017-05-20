@@ -3,6 +3,6 @@
     <string name="app_start">Start</string>
     <string name="app_play">Play</string>
 
-    <string name="one_player">One Player</string>
-    <string name="two_player">Two Player</string>
+    <string name="one_player">1 Player</string>
+    <string name="two_player">2 Player</string>
 </resources>

@@ -8,4 +8,5 @@
     <color name="player_1">#dd27ceff</color>
     <color name="player_2">#ddfa6b2e</color>
     <color name="disable">#dddddd</color>
+    <color name="white">#ffffff</color>
 </resources>

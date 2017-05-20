@@ -1,8 +1,11 @@
 package com.llamaniac.not4.avoid4;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +19,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView player1_turn_string, player2_turn_string ,notify_text;
     private int currentPlayer;
     private int[][] currentBoard;
-    private Grid game;
+    private Grid grid;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
@@ -31,7 +34,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         color_player1 = getResources().getColor(R.color.player_1);
         color_player2 = getResources().getColor(R.color.player_2);
 
-        game = new Grid();
+        grid = new Grid();
 
         p1_icon = (ImageView) findViewById(R.id.p1imageView);
         p2_icon = (ImageView) findViewById(R.id.p2imageView);
@@ -50,6 +53,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
         player2_turn_string.setText(NameStore.INSTANCE.getPlayer2Name());
 
+
+
+        restart_button = (Button) findViewById(R.id.restart_button);
+        restart_button.setOnClickListener(this);
+        buttons = new HashMap<>();
+
+        initColumnButtons();
+
+    }
+
+    private void initColumnButtons() {
         c1a = (Button) findViewById(R.id.c1a);
         c2a = (Button) findViewById(R.id.c2a);
         c3a = (Button) findViewById(R.id.c3a);
@@ -80,8 +94,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         c4e = (Button) findViewById(R.id.c4e);
         c5e = (Button) findViewById(R.id.c5e);
 
-        restart_button = (Button) findViewById(R.id.restart_button);
-
         c1a.setOnClickListener(this);
         c2a.setOnClickListener(this);
         c3a.setOnClickListener(this);
@@ -111,10 +123,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         c3e.setOnClickListener(this);
         c4e.setOnClickListener(this);
         c5e.setOnClickListener(this);
-
-        restart_button.setOnClickListener(this);
-
-        buttons = new HashMap<>();
 
         buttons.put("c1a" ,c1a);
         buttons.put("c1b" ,c1b);
@@ -148,8 +156,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateView() {
-        int[][] currentBoard = game.getBoard();
-        int currentPlayer = game.getActivePlayer();
+        int[][] currentBoard = grid.getBoard();
+        int currentPlayer = grid.getActivePlayer();
         //player_turn_string.setText("Player " + currentPlayer + "'s Turn");
 
     }
@@ -160,6 +168,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Button value = entry.getValue();
             value.setClickable(false);
         }
+
+        for (Coords c: grid.getLosingLocations()) {
+            String s = "c";
+            s += (c.getY()+1);
+            s += numToString(c.getX());
+            Log.d(RobotActivity.TAG, s);
+            buttons.get(s).setTextColor(getResources().getColor(R.color.white));
+            buttons.get(s).setText("✦");
+        }
+
         player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
         player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
         p1_icon.setColorFilter(getResources().getColor(R.color.disable));
@@ -286,8 +304,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updatePlayer() {
-        if(!game.boardIsFull()) {
-            currentPlayer = game.getActivePlayer();
+        if(!grid.boardIsFull()) {
+            currentPlayer = grid.getActivePlayer();
             //player_turn_string.setText(currentplayersName() + "'s Turn");
             if (currentPlayer == 1) {
                 player1_turn_string.setTextColor(color_player1);
@@ -341,14 +359,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } return "z";
     }
     private void updateGrid() {
-        currentBoard = game.getBoard();
+        currentBoard = grid.getBoard();
         concatNameAndSet();
-        if (game.getPlayer1lost()) {
+        if (grid.getPlayer1lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player2);
             endGame();
-        } else if (game.getPlayer2lost()) {
+        } else if (grid.getPlayer2lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player1);
@@ -358,7 +376,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void columnBtn(int column) {
-        game.add(column);
+        grid.add(column);
         updatePlayer();
         updateGrid();
     }

@@ -17,7 +17,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     private TextView player_turn_string, jimmy_turn_string, notify_text;
     private int currentPlayer;
     private int[][] currentBoard;
-    public static Grid game;
+    public static Grid grid;
     private AI jimmy;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
@@ -52,7 +52,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         jimmy_turn_string.setText("Jimmy");
 
 
-        game = new Grid();
+        grid = new Grid();
         jimmy = new AI();
 
         buttons = new HashMap<>();
@@ -161,6 +161,16 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             Button value = entry.getValue();
             value.setClickable(false);
         }
+
+        for (Coords c: grid.getLosingLocations()) {
+            String s = "c";
+            s += (c.getY()+1);
+            s += numToString(c.getX());
+            Log.d(RobotActivity.TAG, s);
+            buttons.get(s).setTextColor(getResources().getColor(R.color.white));
+            buttons.get(s).setText("✦");
+        }
+
         player_turn_string.setTextColor(getResources().getColor(R.color.disable));
         jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
         p1_icon.setColorFilter(getResources().getColor(R.color.disable));
@@ -292,8 +302,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void updatePlayer() {
-        currentPlayer = game.getActivePlayer();
-        if(!game.boardIsFull()) {
+        currentPlayer = grid.getActivePlayer();
+        if(!grid.boardIsFull()) {
 
             if (currentPlayer == 2) {
                 jimmy_turn_string.setTextColor(color_player2);
@@ -348,16 +358,16 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean updateGrid() {
-        currentBoard = game.getBoard();
+        currentBoard = grid.getBoard();
         concatNameAndSet();
-        if (game.getPlayer1lost()) {
+        if (grid.getPlayer1lost()) {
             popUpMsg = "Jimmy Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player2);
 
             endGame();
             return true;
-        } else if (game.getPlayer2lost()) {
+        } else if (grid.getPlayer2lost()) {
             popUpMsg = "You Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player1);
@@ -368,7 +378,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void columnBtn(int column) {
-        if (game.add(column) > 0) {
+        if (grid.add(column) > 0) {
             updatePlayer();
             if (!updateGrid()) {
                 robotTurn();
@@ -383,8 +393,8 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterDelay() {
                 jimmy.makeMove();
-                Log.d(RobotActivity.TAG, "Player 1 lost: " + game.getPlayer1lost());
-                Log.d(RobotActivity.TAG, "Player 2 lost: " + game.getPlayer2lost());
+                Log.d(RobotActivity.TAG, "Player 1 lost: " + grid.getPlayer1lost());
+                Log.d(RobotActivity.TAG, "Player 2 lost: " + grid.getPlayer2lost());
                 updatePlayer();
                 if (!updateGrid()) {
                     setButtonsClickable(true);
