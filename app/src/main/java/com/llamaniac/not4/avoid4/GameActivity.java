@@ -1,10 +1,19 @@
 package com.llamaniac.not4.avoid4;
 
 import android.content.res.ColorStateList;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +21,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.llamaniac.not4.avoid4.R.drawable.ic_person_black_48px;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
@@ -23,7 +34,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
     private String popUpMsg;
-    private ImageView p1_icon, p2_icon;
+    private ImageView p1_icon, p2_icon, p1_crown, p2_crown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -40,6 +51,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         p2_icon = (ImageView) findViewById(R.id.p2imageView);
         p1_icon.setColorFilter(color_player1);
         p2_icon.setColorFilter(getResources().getColor(R.color.disable));
+
+        p1_crown = (ImageView) findViewById(R.id.p1crown);
+        p2_crown = (ImageView) findViewById(R.id.p2crown);
+        p1_crown.setVisibility(View.INVISIBLE);
+        p2_crown.setVisibility(View.INVISIBLE);
 
 
         player1_turn_string = (TextView)findViewById(R.id.player1_turn_string);
@@ -365,11 +381,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player2);
+            p2_crown.setVisibility(View.VISIBLE);
             endGame();
         } else if (grid.getPlayer2lost()) {
             popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
             notify_text.setText(popUpMsg);
             notify_text.setTextColor(color_player1);
+            p1_crown.setVisibility(View.VISIBLE);
             endGame();
         }
     }

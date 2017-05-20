@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/linearLayout"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/p1imageView"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/player1_turn_string"
         android:layout_centerHorizontal="true">
 
         <LinearLayout
@@ -287,10 +287,30 @@
         android:ems="10"
         android:inputType="textMultiLine"
         android:textAlignment="center"
-        android:textSize="24sp"
-        android:layout_marginBottom="25dp"
+        android:textSize="40sp"
+        android:layout_marginBottom="27dp"
         android:layout_above="@+id/player1_turn_string"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/p2crown"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:tint="@color/gold_overlay"
+        android:src="@drawable/ic_crown_white_48px"
+        android:layout_alignTop="@+id/p1crown"
+        android:layout_alignLeft="@+id/p2imageView"
+        android:layout_alignStart="@+id/p2imageView" />
+    <ImageView
+        android:id="@+id/p1crown"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:tint="@color/gold_overlay"
+        android:src="@drawable/ic_crown_white_48px"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/p1imageView"
+        android:layout_alignStart="@+id/p1imageView"
+        android:layout_marginTop="11dp" />
 
 
 </RelativeLayout>
