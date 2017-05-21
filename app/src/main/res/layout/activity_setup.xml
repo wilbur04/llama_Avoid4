@@ -12,7 +12,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="86dp"
-        android:text="Avoid4"
+        android:text="Names"
+        android:textAlignment="center"
         android:textSize="50sp" />
 
     <EditText
@@ -29,7 +30,8 @@
         android:layout_marginRight="20dip"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:maxLength="7"/>
 
 
 
@@ -47,7 +49,8 @@
         android:layout_marginRight="20dip"
         android:layout_below="@+id/player1Name"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:maxLength="7"/>
 
 
     <Button
@@ -59,7 +62,12 @@
         android:layout_marginBottom="38dp"
         android:text="@string/app_start"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="21sp"
+        android:textAllCaps="false"
+        android:stateListAnimator="@null"/>
 
     <ImageView
         android:id="@+id/imageView3"

@@ -21,13 +21,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private HashMap<String, Button> buttons;
     private String name1, name2;
     private ImageView p1_icon, p2_icon, p1_crown, p2_crown;
-    private PopUpActivity pop;
+    private View game_screen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
 
         color_player1 = getResources().getColor(R.color.player_1);
         color_player2 = getResources().getColor(R.color.player_2);
@@ -51,8 +50,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         player1_turn_string.setTextColor(color_player1);
         player1_turn_string.setText(name1);
 
-        pop = new PopUpActivity();
-
         player2_turn_string = (TextView)findViewById(R.id.player2_turn_string);
         player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
         player2_turn_string.setText(name2);
@@ -63,6 +60,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         restart_button = (Button) findViewById(R.id.restart_button);
         restart_button.setOnClickListener(this);
         buttons = new HashMap<>();
+
+        game_screen = findViewById(R.id.gameScreen);
 
         initColumnButtons();
 
@@ -184,6 +183,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
+        game_screen.setOnClickListener(this);
     }
 
 
@@ -298,6 +298,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(getIntent());
                 break;
 
+            case R.id.gameScreen:
+                if (findViewById(R.id.winBox).getVisibility()==View.VISIBLE) {
+                    findViewById(R.id.winBox).setVisibility(View.INVISIBLE);
+                } else {
+                    findViewById(R.id.winBox).setVisibility(View.VISIBLE);
+                }
+                break;
+
             default:
                 break;
         }
@@ -319,10 +327,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 p1_icon.setColorFilter(getResources().getColor(R.color.disable));
             }
         }else{
-            p1_crown.setVisibility(View.VISIBLE);
-            p2_crown.setVisibility(View.VISIBLE);
-            winBoxText.setText("Draw");
-            end_game_settings();
+            if (grid.getPlayer1lost() || grid.getPlayer2lost()) {
+                updateGrid();
+            } else {
+                p1_crown.setVisibility(View.VISIBLE);
+                p2_crown.setVisibility(View.VISIBLE);
+                winBoxText.setText("Draw");
+                end_game_settings();
+            }
         }
     }
 

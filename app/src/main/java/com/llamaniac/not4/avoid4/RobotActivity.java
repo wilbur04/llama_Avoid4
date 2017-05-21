@@ -24,6 +24,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
     private String name1, name2;
     public static final String TAG = RobotActivity.class.getSimpleName();
     private ImageView p1_icon, p2_icon, p1_crown, p2_crown;
+    private View game_screen;
 
 
     @Override
@@ -58,13 +59,13 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
 
         winBoxText = (TextView)findViewById(R.id.winBoxText);
 
-
         grid = new Grid();
         jimmy = new AI();
 
         buttons = new HashMap<>();
         restart_button = (Button) findViewById(R.id.restart_button);
         restart_button.setOnClickListener(this);
+        game_screen = findViewById(R.id.gameScreen);
 
         initColumnButtons();
 
@@ -179,6 +180,7 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         }
 
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
+        game_screen.setOnClickListener(this);
     }
     private void setButtonsClickable(boolean state) {
         for(Map.Entry<String, Button> entry : buttons.entrySet()) {
@@ -296,6 +298,14 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
                 findViewById(R.id.restart_button).setVisibility(View.INVISIBLE);
                 finish();
                 startActivity(getIntent());
+                break;
+
+            case R.id.gameScreen:
+                if (findViewById(R.id.winBox).getVisibility()==View.VISIBLE) {
+                    findViewById(R.id.winBox).setVisibility(View.INVISIBLE);
+                } else {
+                    findViewById(R.id.winBox).setVisibility(View.VISIBLE);
+                }
                 break;
 
             default:

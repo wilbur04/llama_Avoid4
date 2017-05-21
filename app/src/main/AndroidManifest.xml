@@ -22,7 +22,6 @@
         <activity  android:name=".SetupActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".RobotActivity" />
-        <activity android:name=".PopUpActivity"/>
 
     </application>
 

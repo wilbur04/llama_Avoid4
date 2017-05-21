@@ -196,7 +196,7 @@ public class Grid {
                 } else {
                     count1 = 0;
                     count2 = 0;
-                    p2_locations.clear();
+                    p1_locations.clear();
                     p2_locations.clear();
                 }
                 if (count1 == 4 ) {
@@ -234,7 +234,7 @@ public class Grid {
                 } else {
                     count1 = 0;
                     count2 = 0;
-                    p2_locations.clear();
+                    p1_locations.clear();
                     p2_locations.clear();
                 }
                 if (count1 == 4 ){

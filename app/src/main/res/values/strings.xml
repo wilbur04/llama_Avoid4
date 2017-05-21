@@ -5,4 +5,5 @@
 
     <string name="one_player">1 Player</string>
     <string name="two_player">2 Player</string>
+    <string name="restart">Restart</string>
 </resources>

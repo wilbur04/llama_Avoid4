@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"  android:id="@+id/gameScreen">
 
     <TextView
         android:id="@+id/player1_turn_string"
@@ -251,13 +251,19 @@
         android:id="@+id/restart_button"
         android:layout_width="match_parent"
         android:layout_height="80dip"
-        android:text="Restart"
+        android:text="@string/restart"
         android:visibility="invisible"
+        android:background="@drawable/button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginBottom="33dp" />
+        android:layout_marginBottom="16dp"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout"
+        android:layout_alignLeft="@+id/linearLayout"
+        android:layout_alignStart="@+id/linearLayout"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="21sp"
+        android:textAllCaps="false"
+        android:stateListAnimator="@null"/>
 
     <ImageView
         android:id="@+id/p1imageView"
