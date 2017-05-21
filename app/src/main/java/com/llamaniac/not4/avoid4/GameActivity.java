@@ -1,40 +1,27 @@
 package com.llamaniac.not4.avoid4;
 
-import android.content.res.ColorStateList;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.Window;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.llamaniac.not4.avoid4.R.drawable.ic_person_black_48px;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
             , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e, restart_button;
-    private TextView player1_turn_string, player2_turn_string ,notify_text;
+    private TextView player1_turn_string, player2_turn_string, winBoxText;
     private int currentPlayer;
     private int[][] currentBoard;
     private Grid grid;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
-    private String popUpMsg;
+    private String name1, name2;
     private ImageView p1_icon, p2_icon, p1_crown, p2_crown;
+    private PopUpActivity pop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -57,18 +44,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         p1_crown.setVisibility(View.INVISIBLE);
         p2_crown.setVisibility(View.INVISIBLE);
 
+        name1 = NameStore.INSTANCE.getPlayer1Name();
+        name2 = NameStore.INSTANCE.getPlayer2Name();
 
         player1_turn_string = (TextView)findViewById(R.id.player1_turn_string);
         player1_turn_string.setTextColor(color_player1);
-        player1_turn_string.setText(NameStore.INSTANCE.getPlayer1Name());
+        player1_turn_string.setText(name1);
 
-        notify_text = (TextView)findViewById(R.id.nofify_text);
-        notify_text.setText("");
+        pop = new PopUpActivity();
 
         player2_turn_string = (TextView)findViewById(R.id.player2_turn_string);
         player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
-        player2_turn_string.setText(NameStore.INSTANCE.getPlayer2Name());
+        player2_turn_string.setText(name2);
 
+        winBoxText = (TextView)findViewById(R.id.winBoxText);
 
 
         restart_button = (Button) findViewById(R.id.restart_button);
@@ -193,11 +182,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             buttons.get(s).setTextColor(getResources().getColor(R.color.white));
             buttons.get(s).setText("✦");
         }
-
-        player1_turn_string.setTextColor(getResources().getColor(R.color.disable));
-        player2_turn_string.setTextColor(getResources().getColor(R.color.disable));
-        p1_icon.setColorFilter(getResources().getColor(R.color.disable));
-        p2_icon.setColorFilter(getResources().getColor(R.color.disable));
 
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
     }
@@ -335,8 +319,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 p1_icon.setColorFilter(getResources().getColor(R.color.disable));
             }
         }else{
-            notify_text.setText("Game Over");
-            endGame();
+            p1_crown.setVisibility(View.VISIBLE);
+            p2_crown.setVisibility(View.VISIBLE);
+            winBoxText.setText("Draw");
+            end_game_settings();
         }
     }
 
@@ -378,20 +364,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         currentBoard = grid.getBoard();
         concatNameAndSet();
         if (grid.getPlayer1lost()) {
-            popUpMsg = NameStore.INSTANCE.getPlayer2Name()+" Won";
-            notify_text.setText(popUpMsg);
-            notify_text.setTextColor(color_player2);
             p2_crown.setVisibility(View.VISIBLE);
-            endGame();
+            winBoxText.setText(name2 + " Won");
+            end_game_settings();
         } else if (grid.getPlayer2lost()) {
-            popUpMsg = NameStore.INSTANCE.getPlayer1Name()+" Won";
-            notify_text.setText(popUpMsg);
-            notify_text.setTextColor(color_player1);
             p1_crown.setVisibility(View.VISIBLE);
-            endGame();
+            winBoxText.setText(name1 + " Won");
+            end_game_settings();
         }
     }
 
+    private void end_game_settings() {
+        endGame();
+        findViewById(R.id.winBox).setVisibility(View.VISIBLE);
+        p1_icon.setColorFilter(color_player1);
+        p2_icon.setColorFilter(color_player2);
+        player1_turn_string.setTextColor(color_player1);
+        player2_turn_string.setTextColor(color_player2);
+    }
 
     private void columnBtn(int column) {
         grid.add(column);
@@ -399,15 +389,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         updateGrid();
     }
 
-    private String currentplayersName(){
-        switch (currentPlayer) {
-            case 1:
-                return NameStore.INSTANCE.getPlayer1Name();
-            case 2:
-                return NameStore.INSTANCE.getPlayer2Name();
-            default:
-                return NameStore.INSTANCE.getPlayer1Name();
-        }
-    }
 
 }

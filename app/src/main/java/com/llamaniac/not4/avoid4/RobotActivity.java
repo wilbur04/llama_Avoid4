@@ -14,16 +14,16 @@ import java.util.Map;
 public class RobotActivity extends AppCompatActivity implements View.OnClickListener{
     private Button c1a, c2a, c3a, c4a, c5a, c1b, c2b, c3b, c4b, c5b, c1c, c2c, c3c, c4c, c5c
             , c1d, c2d, c3d, c4d, c5d, c1e, c2e, c3e, c4e, c5e, restart_button;
-    private TextView player_turn_string, jimmy_turn_string, notify_text;
+    private TextView player_turn_string, jimmy_turn_string, winBoxText;
     private int currentPlayer;
     private int[][] currentBoard;
     public static Grid grid;
     private AI jimmy;
     private int color_player1, color_player2;
     private HashMap<String, Button> buttons;
-    private String popUpMsg;
+    private String name1, name2;
     public static final String TAG = RobotActivity.class.getSimpleName();
-    private ImageView p1_icon, p2_icon;
+    private ImageView p1_icon, p2_icon, p1_crown, p2_crown;
 
 
     @Override
@@ -39,17 +39,24 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         p1_icon.setColorFilter(color_player1);
         p2_icon.setColorFilter(getResources().getColor(R.color.disable));
 
+        p1_crown = (ImageView) findViewById(R.id.p1crown);
+        p2_crown = (ImageView) findViewById(R.id.p2crown);
+        p1_crown.setVisibility(View.INVISIBLE);
+        p2_crown.setVisibility(View.INVISIBLE);
+
+        name1 = "You";
+        name2 = "Jimmy";
+
 
         player_turn_string = (TextView)findViewById(R.id.player1_turn_string);
         player_turn_string.setTextColor(color_player1);
-        player_turn_string.setText("You");
-
-        notify_text = (TextView)findViewById(R.id.nofify_text);
-        notify_text.setText("");
+        player_turn_string.setText(name1);
 
         jimmy_turn_string = (TextView)findViewById(R.id.player2_turn_string);
         jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
-        jimmy_turn_string.setText("Jimmy");
+        jimmy_turn_string.setText(name2);
+
+        winBoxText = (TextView)findViewById(R.id.winBoxText);
 
 
         grid = new Grid();
@@ -170,11 +177,6 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
             buttons.get(s).setTextColor(getResources().getColor(R.color.white));
             buttons.get(s).setText("✦");
         }
-
-        player_turn_string.setTextColor(getResources().getColor(R.color.disable));
-        jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
-        p1_icon.setColorFilter(getResources().getColor(R.color.disable));
-        p2_icon.setColorFilter(getResources().getColor(R.color.disable));
 
         findViewById(R.id.restart_button).setVisibility(View.VISIBLE);
     }
@@ -317,8 +319,10 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
                 jimmy_turn_string.setTextColor(getResources().getColor(R.color.disable));
             }
         }else{
-            notify_text.setText("Game Over");
-            endGame();
+            p1_crown.setVisibility(View.VISIBLE);
+            p2_crown.setVisibility(View.VISIBLE);
+            winBoxText.setText("Draw");
+            end_game_settings();
         }
     }
 
@@ -361,20 +365,28 @@ public class RobotActivity extends AppCompatActivity implements View.OnClickList
         currentBoard = grid.getBoard();
         concatNameAndSet();
         if (grid.getPlayer1lost()) {
-            popUpMsg = "Jimmy Won";
-            notify_text.setText(popUpMsg);
-            notify_text.setTextColor(color_player2);
-
+            p2_crown.setVisibility(View.VISIBLE);
+            winBoxText.setText(name2 + " Won");
+            end_game_settings();
             endGame();
             return true;
         } else if (grid.getPlayer2lost()) {
-            popUpMsg = "You Won";
-            notify_text.setText(popUpMsg);
-            notify_text.setTextColor(color_player1);
+            p1_crown.setVisibility(View.VISIBLE);
+            winBoxText.setText(name1 + " Won");
+            end_game_settings();
             endGame();
             return true;
         }
         return false;
+    }
+
+    private void end_game_settings() {
+        endGame();
+        findViewById(R.id.winBox).setVisibility(View.VISIBLE);
+        p1_icon.setColorFilter(color_player1);
+        p2_icon.setColorFilter(color_player2);
+        player_turn_string.setTextColor(color_player1);
+        jimmy_turn_string.setTextColor(color_player2);
     }
 
     private void columnBtn(int column) {
